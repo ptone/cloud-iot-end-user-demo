@@ -4,7 +4,7 @@
             <ion-menu-button autoHide></ion-menu-button>
         </ion-buttons>
 
-        <ion-title>My Todo List</ion-title>
+        <ion-title>My Devices</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -30,6 +30,10 @@
         <ion-item *ngFor="let todo of filtered | async; trackBy: trackById">
             <ion-label>
                 <span [class.complete]="todo.status === 'complete'">{{ todo.content }}</span>
+            </ion-label>
+
+            <ion-label>
+                <span>{{ todo.tag }}</span>
             </ion-label>
 
             <ion-checkbox (click)="toggleStatus(todo)" [checked]="todo.status === 'complete'" color="success"></ion-checkbox>

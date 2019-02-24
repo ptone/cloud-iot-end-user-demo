@@ -11,9 +11,10 @@
 
     <form [formGroup]="todoForm" (ngSubmit)="createTodo()">
 
-        <ion-label>Todo Details</ion-label>
-        <ion-textarea formControlName="content" type="content" placeholder="your todo details" rows="2"></ion-textarea>
-
+        <ion-label>Device Task</ion-label>
+        <ion-textarea formControlName="content" type="content" placeholder="Notes" rows="2"></ion-textarea>
+        <ion-label>tags</ion-label>
+        <ion-textarea formControlName="tag" type="tag" placeholder="other" rows="1"></ion-textarea>
         <ion-label>Status</ion-label>
         <ion-list>
             <ion-radio-group formControlName="status">

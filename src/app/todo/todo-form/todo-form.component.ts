@@ -24,6 +24,7 @@ export class TodoFormComponent implements OnInit {
   ngOnInit() {
     const data = {
       content: '',
+      tag: '',
       status: 'pending',
       ...this.todo
     };
@@ -35,8 +36,10 @@ export class TodoFormComponent implements OnInit {
           Validators.minLength(1),
           Validators.maxLength(250)
         ]
+      
       ],
-      status: [data.status, [Validators.required]]
+      status: [data.status, [Validators.required]],
+      tag: [data.tag, []]
     });
   }
 
