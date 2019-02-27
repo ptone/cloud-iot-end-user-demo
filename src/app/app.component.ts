@@ -7,7 +7,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
-import { FcmService } from './services/fcm.service';
+// import { FcmService } from './services/fcm.service';
+import { SharedModule } from './shared/shared.module';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,7 @@ export class AppComponent {
     private auth: AuthService,
     private storage: Storage,
     private router: Router,
-    private fcm: FcmService
+    // private fcm: FcmService
   ) {
     this.initializeApp();
   }
@@ -33,8 +34,8 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.fcm.getPermission().subscribe();
-      this.fcm.listenToMessages().subscribe();
+      // this.fcm.getPermission().subscribe();
+      // this.fcm.listenToMessages().subscribe();
     });
   }
 

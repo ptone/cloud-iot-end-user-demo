@@ -19,6 +19,7 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Firebase } from '@ionic-native/firebase/ngx';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,7 +33,8 @@ import { Firebase } from '@ionic-native/firebase/ngx';
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireFunctionsModule,
-    AngularFireMessagingModule
+    AngularFireMessagingModule,
+    SharedModule
   ],
   providers: [
     Firebase,

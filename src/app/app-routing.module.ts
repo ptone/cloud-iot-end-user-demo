@@ -7,18 +7,19 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: './home/home.module#HomePageModule',
-    canActivate: [TutorialGuard]
-  },
-  {
-    path: 'todo',
-    loadChildren: './todo/todo.module#TodoPageModule',
     canActivate: [AuthGuard]
   },
   {
-    path: 'tutorial',
-    loadChildren: './tutorial/tutorial.module#TutorialPageModule'
+    path: 'todo',
+    loadChildren: './todo/todo.module#TodoPageModule'
+    ,
+    canActivate: [AuthGuard]
   },
-  { path: 'fcm', loadChildren: './fcm/fcm.module#FcmPageModule' }
+  { path: 'login', loadChildren: './loginpage/loginpage.module#LoginpagePageModule',
+    canActivate: [AuthGuard]
+  },
+  {path: '**', redirectTo: 'login'}
+
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

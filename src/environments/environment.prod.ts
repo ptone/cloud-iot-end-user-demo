@@ -1,11 +1,11 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: "AIzaSyB-HI6rHS1vw5gE8BlAFrpbSNfWfiQYpfk",
-    authDomain: "ptone-ionic-test.firebaseapp.com",
-    databaseURL: "https://ptone-ionic-test.firebaseio.com",
-    projectId: "ptone-ionic-test",
-    storageBucket: "",
-    messagingSenderId: "139588004094"
+    apiKey: "AIzaSyBH9jWHpKntFUerTyJOAiek4RwmxNR3-fk",
+    authDomain: "iot-end-user-demo.firebaseapp.com",
+    databaseURL: "https://iot-end-user-demo.firebaseio.com",
+    projectId: "iot-end-user-demo",
+    storageBucket: "iot-end-user-demo.appspot.com",
+    messagingSenderId: "108224824450"
   }
 };

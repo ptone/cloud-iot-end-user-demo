@@ -16,10 +16,10 @@
             All
         </ion-segment-button>
         <ion-segment-button value="complete">
-            Complete
+            Online
         </ion-segment-button>
         <ion-segment-button value="pending">
-            Pending
+            Offline
         </ion-segment-button>
 
 
@@ -27,21 +27,24 @@
 
     <ion-list>
 
-        <ion-item *ngFor="let todo of filtered | async; trackBy: trackById">
-            <ion-label>
-                <span [class.complete]="todo.status === 'complete'">{{ todo.content }}</span>
+        <ion-item [href]="'todo/' + todo.id" *ngFor="let todo of filtered | async; trackBy: trackById">
+            <ion-label >
+                <!-- <span ><a [href]="'todo/' + todo.id">{{ todo.content }}</a></span> -->
+                <span>{{ todo.content }}</span>
             </ion-label>
 
             <ion-label>
                 <span>{{ todo.tag }}</span>
+                <!-- <span ><a [href]="'todo/' + todo.id">{{ todo.tag }}</a></span> -->
+
             </ion-label>
 
-            <ion-checkbox (click)="toggleStatus(todo)" [checked]="todo.status === 'complete'" color="success"></ion-checkbox>
+            <!-- <ion-checkbox (click)="toggleStatus(todo)" [checked]="todo.status === 'complete'" color="success"></ion-checkbox> -->
 
 
-            <ion-button [href]="'todo/' + todo.id">
+            <!-- <ion-button [href]="'todo/' + todo.id">
                 <ion-icon name="eye"></ion-icon>
-            </ion-button>
+            </ion-button> -->
 
             <ion-button (click)="presentTodoForm(todo)" color="tertiary">
                 <ion-icon name="create"></ion-icon>
