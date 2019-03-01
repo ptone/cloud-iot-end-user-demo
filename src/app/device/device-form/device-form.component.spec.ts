@@ -1,22 +1,20 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TodoPage } from './todo.page';
+import { deviceFormComponent } from './device-form.component';
 
-describe('TodoPage', () => {
-  let component: TodoPage;
-  let fixture: ComponentFixture<TodoPage>;
+describe('deviceFormComponent', () => {
+  let component: deviceFormComponent;
+  let fixture: ComponentFixture<deviceFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TodoPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      declarations: [ deviceFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TodoPage);
+    fixture = TestBed.createComponent(deviceFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

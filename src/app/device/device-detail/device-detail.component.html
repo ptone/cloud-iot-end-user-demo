@@ -10,13 +10,13 @@
 
 <ion-content padding>
 
-    <ion-card *ngIf="todo$ | async as todo">
+    <ion-card *ngIf="device$ | async as device">
         <ion-card-header>
-            <ion-card-title>{{ todo.id }}</ion-card-title>
+            <ion-card-title>{{ device.id }}</ion-card-title>
         </ion-card-header>
 
         <ion-card-content>
-            <p *ngFor="let prop of todo | keyvalue">
+            <p *ngFor="let prop of device | keyvalue">
                 <strong>{{ prop.key }}</strong>: {{ prop.value }}
             </p>
         </ion-card-content>

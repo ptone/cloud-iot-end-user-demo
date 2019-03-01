@@ -5,16 +5,16 @@ import { DbService } from '../services/db.service';
 import { AuthService } from '../services/auth.service';
 
 import { ModalController } from '@ionic/angular';
-import { TodoFormComponent } from './todo-form/todo-form.component';
+import { deviceFormComponent } from './device-form/device-form.component';
 import { Observable } from 'rx';
 
 @Component({
-  selector: 'app-todo',
-  templateUrl: './todo.page.html',
-  styleUrls: ['./todo.page.scss']
+  selector: 'app-device',
+  templateUrl: './device.page.html',
+  styleUrls: ['./device.page.scss']
 })
-export class TodoPage implements OnInit {
-  todos;
+export class devicePage implements OnInit {
+  devices;
   filtered;
 
   filter = new BehaviorSubject(null);
@@ -26,12 +26,12 @@ export class TodoPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.todos = this.auth.user$.pipe(
+    this.devices = this.auth.user$.pipe(
       switchMap(user =>
-        this.db.collection$('todos', ref =>
+        this.db.collection$('devices', ref =>
           ref
             .where('uid', '==', user.uid)
-            .orderBy('createdAt', 'desc')
+            // .orderBy('createdAt', 'desc')
             .limit(25)
         )
       ),
@@ -40,7 +40,7 @@ export class TodoPage implements OnInit {
 
     this.filtered = this.filter.pipe(
       switchMap(status => {
-        return this.todos.pipe(
+        return this.devices.pipe(
           map(arr =>
             (arr as any[]).filter(
               obj => (status ? obj.status === status : true)
@@ -51,28 +51,28 @@ export class TodoPage implements OnInit {
     );
   }
 
-  deleteTodo(todo) {
-    this.db.delete(`todos/${todo.id}`);
+  deletedevice(device) {
+    this.db.delete(`devices/${device.id}`);
   }
 
-  toggleStatus(todo) {
-    const status = todo.status === 'complete' ? 'pending' : 'complete';
-    this.db.updateAt(`todos/${todo.id}`, { status });
+  toggleStatus(device) {
+    const status = device.status === 'complete' ? 'pending' : 'complete';
+    this.db.updateAt(`devices/${device.id}`, { status });
   }
 
   updateFilter(val) {
     this.filter.next(val);
   }
 
-  async presentTodoForm(todo?: any) {
+  async presentdeviceForm(device?: any) {
     const modal = await this.modal.create({
-      component: TodoFormComponent,
-      componentProps: { todo }
+      component: deviceFormComponent,
+      componentProps: { device }
     });
     return await modal.present();
   }
 
-  trackById(idx, todo) {
-    return todo.id;
+  trackById(idx, device) {
+    return device.id;
   }
 }

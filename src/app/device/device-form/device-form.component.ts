@@ -5,11 +5,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-todo-form',
-  templateUrl: './todo-form.component.html',
-  styleUrls: ['./todo-form.component.scss']
+  selector: 'app-device-form',
+  templateUrl: './device-form.component.html',
+  styleUrls: ['./device-form.component.scss']
 })
-export class TodoFormComponent implements OnInit {
+export class deviceFormComponent implements OnInit {
   constructor(
     private db: DbService,
     private auth: AuthService,
@@ -17,18 +17,18 @@ export class TodoFormComponent implements OnInit {
     private fb: FormBuilder // private params: NavParams
   ) {}
 
-  todoForm: FormGroup;
+  deviceForm: FormGroup;
 
-  todo;
+  device;
 
   ngOnInit() {
     const data = {
       content: '',
       tag: '',
       status: 'pending',
-      ...this.todo
+      ...this.device
     };
-    this.todoForm = this.fb.group({
+    this.deviceForm = this.fb.group({
       content: [
         data.content,
         [
@@ -43,17 +43,17 @@ export class TodoFormComponent implements OnInit {
     });
   }
 
-  async createTodo() {
+  async createdevice() {
     const uid = await this.auth.uid();
-    const id = this.todo ? this.todo.id : '';
+    const id = this.device ? this.device.id : '';
     const data = {
       uid,
       createdAt: Date.now(),
-      ...this.todo,
-      ...this.todoForm.value
+      ...this.device,
+      ...this.deviceForm.value
     };
 
-    this.db.updateAt(`todos/${id}`, data);
+    this.db.updateAt(`devices/${id}`, data);
     this.modal.dismiss();
   }
 }

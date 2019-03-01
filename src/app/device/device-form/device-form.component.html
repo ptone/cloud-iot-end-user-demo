@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title *ngIf="!todo">Create New Todo</ion-title>
-        <ion-title *ngIf="todo">Update {{ todo.id }}</ion-title>
+        <ion-title *ngIf="!device">Create New device</ion-title>
+        <ion-title *ngIf="device">Update {{ device.id }}</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -9,7 +9,7 @@
 
     <div></div>
 
-    <form [formGroup]="todoForm" (ngSubmit)="createTodo()">
+    <form [formGroup]="deviceForm" (ngSubmit)="createdevice()">
 
         <ion-label>Device Task</ion-label>
         <ion-textarea formControlName="content" type="content" placeholder="Notes" rows="2"></ion-textarea>
@@ -32,7 +32,7 @@
             </ion-radio-group>
         </ion-list>
 
-        <ion-button [disabled]="todoForm.invalid" type="submit">{{ todo ? 'Update!' : 'Create!' }}</ion-button>
+        <ion-button [disabled]="deviceForm.invalid" type="submit">{{ device ? 'Update!' : 'Create!' }}</ion-button>
     </form>
 
 

@@ -10,8 +10,8 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'todo',
-    loadChildren: './todo/todo.module#TodoPageModule'
+    path: 'device',
+    loadChildren: './device/device.module#devicePageModule'
     ,
     canActivate: [AuthGuard]
   },

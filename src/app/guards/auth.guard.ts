@@ -28,11 +28,11 @@ export class AuthGuard implements CanActivate {
     console.log("have user") ;
     console.log(next.url);
     if (!next.url.length) {
-      this.router.navigate(['/todo']);
+      this.router.navigate(['/device']);
       return false;
     }
-    if (next.url[0].path != 'todo') {
-      this.router.navigate(['/todo']);
+    if (next.url[0].path != 'device') {
+      this.router.navigate(['/device']);
       return false;
     } else {
       return true;

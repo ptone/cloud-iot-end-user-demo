@@ -5,18 +5,18 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { TodoPage } from './todo.page';
-import { TodoFormComponent } from './todo-form/todo-form.component';
-import { TodoDetailComponent } from './todo-detail/todo-detail.component';
+import { devicePage } from './device.page';
+import { deviceFormComponent } from './device-form/device-form.component';
+import { deviceDetailComponent } from './device-detail/device-detail.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: TodoPage
+    component: devicePage
   },
   {
     path: ':id',
-    component: TodoDetailComponent
+    component: deviceDetailComponent
   }
 ];
 
@@ -28,7 +28,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule
   ],
-  declarations: [TodoPage, TodoFormComponent, TodoDetailComponent],
-  entryComponents: [TodoFormComponent]
+  declarations: [devicePage, deviceFormComponent, deviceDetailComponent],
+  entryComponents: [deviceFormComponent]
 })
-export class TodoPageModule {}
+export class devicePageModule {}
