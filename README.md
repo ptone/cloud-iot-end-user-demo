@@ -5,7 +5,9 @@
 - [Enroll in the Course](https://projects.angularfirebase.com/p/ionic-4-firebase-master-course/)
 - [Try the Beta Android App](https://play.google.com/apps/testing/com.angularfirebase.ionfire)
 
-
+## setup
+1. npm i
+2. ionic serve
 
 ## Devops
 1. [GCP Project](https://pantheon.corp.google.com/home/dashboard?project=iot-end-user-demo)
