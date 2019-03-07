@@ -1,5 +1,8 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { runInDebugContext } from 'vm';
+import { DeviceManager } from './devices';
+
 const db = admin.firestore();
 
 export const telemetryToFirestore = functions.pubsub.topic('telemetry').onPublish(async (message, context) => {
@@ -40,13 +43,25 @@ export const stateToFirestore = functions.pubsub.topic('state').onPublish(async 
   const buff = new Buffer( message.data, 'base64' );
   const msg = JSON.parse( buff.toString('utf-8') );
   console.log(msg);
+  await db.doc(`devices/${deviceId}/state`).set(msg);
 })
 
+const dm = new DeviceManager('config-demo');
 
-// TODO: implement stub
-export const firestoreToIOTConfig = functions.firestore.document('devices/{deviceId}/config').onUpdate((change, context) => {
-  console.log(change)
-  console.log(context)
-})
+exports.configUpdate = functions.firestore
+  // assumes a document whose ID is the same as the deviceid
+  .document('devices/{deviceId}/config')
+  .onWrite(async (change: functions.Change<admin.firestore.DocumentSnapshot>, context?: functions.EventContext) => {
+    if (context) {
+      await dm.setAuth();
+      console.log(context.params.deviceId);
+      // get the new config data
+      const configData = change.after.data();
+      console.log('sending data', configData);
+      return dm.updateConfig(context.params.deviceId, configData);
+    } else {
+      throw(Error("no context from trigger"));
+    }
+  })
 
 
