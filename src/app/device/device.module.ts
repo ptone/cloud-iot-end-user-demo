@@ -5,18 +5,18 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { devicePage } from './device.page';
-import { deviceFormComponent } from './device-form/device-form.component';
-import { deviceDetailComponent } from './device-detail/device-detail.component';
+import { DevicePage } from './device.page';
+import { DeviceFormComponent } from './device-form/device-form.component';
+import { DeviceDetailComponent } from './device-detail/device-detail.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: devicePage
+    component: DevicePage
   },
   {
     path: ':id',
-    component: deviceDetailComponent
+    component: DeviceDetailComponent
   }
 ];
 
@@ -28,7 +28,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule
   ],
-  declarations: [devicePage, deviceFormComponent, deviceDetailComponent],
-  entryComponents: [deviceFormComponent]
+  declarations: [DevicePage, DeviceFormComponent, DeviceDetailComponent],
+  entryComponents: [DeviceFormComponent]
 })
-export class devicePageModule {}
+export class DevicePageModule {}

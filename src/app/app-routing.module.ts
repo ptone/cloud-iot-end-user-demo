@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'device',
-    loadChildren: './device/device.module#devicePageModule'
+    loadChildren: './device/device.module#DevicePageModule'
     ,
     canActivate: [AuthGuard]
   },

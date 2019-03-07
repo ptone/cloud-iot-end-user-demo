@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { devicePage } from './device.page';
+import { DevicePage } from './device.page';
 
-describe('devicePage', () => {
-  let component: devicePage;
-  let fixture: ComponentFixture<devicePage>;
+describe('DevicePage', () => {
+  let component: DevicePage;
+  let fixture: ComponentFixture<DevicePage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ devicePage ],
+      declarations: [ DevicePage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(devicePage);
+    fixture = TestBed.createComponent(DevicePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
