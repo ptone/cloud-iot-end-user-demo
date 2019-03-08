@@ -38,7 +38,6 @@ export class DeviceChartComponent implements OnInit {
 
 
   async updateCharts(data) {
-    console.log('Updating', data);
     data.sort((a, b) => a.time.toMillis() - b.time.toMillis());
     // if (this.loading) {
     //   this.loading = false;
@@ -53,13 +52,12 @@ export class DeviceChartComponent implements OnInit {
       this.currentTemp = data[0].temp;
       this.lastUpdated = data[0].time.toDate();
     }
-
     // Create or update light chart
     if (!this.lightChart) {
       this.createLightChart();
     } else if (data.length) {
       const datapoint = {
-        x: data[0].time.toDate(),
+        x: new Date(),
         y: data[0].light
       };
       this.lightChart.data.datasets[0].data.push(datapoint);
@@ -90,7 +88,7 @@ export class DeviceChartComponent implements OnInit {
   createLightChart() {
     const canvas = document.getElementById('lightChart') as any;
     const ctx = canvas.getContext('2d');
-    const chart = new Chart(ctx, {
+    this.lightChart = new Chart(ctx, {
       type: 'line',
       data: {
           datasets: [{

@@ -46,9 +46,9 @@ export class DeviceService {
         map(snapshots => snapshots.map(snapshot => {
           return snapshot.payload.doc.data() as Telemetry;
         })
-        // .filter(data => {
-        //   return data.time.toMillis() >= moment().subtract(20, 'seconds').valueOf();
-        // })),
+        .filter(data => {
+          return data.time.toMillis() >= moment().subtract(20, 'seconds').valueOf();
+        })
       ));
   }
 
