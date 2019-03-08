@@ -66,23 +66,60 @@ export class DeviceChartComponent implements OnInit {
       });
     }
 
-    // if (!this.tempChart) {
-    //   this.createTempChart();
-    // } else if (data.length) {
-    //   const datapoint = {
-    //     x: data[0].time.toDate(),
-    //     y: data[0].temp
-    //   };
-    //   this.tempChart.data.datasets[0].data.push(datapoint);
-    //   this.tempChart.update({
-    //     preservation: true
-    //   });
-    // }
+    if (!this.tempChart) {
+      this.createTempChart();
+    } else if (data.length) {
+      const datapoint = {
+        x: new Date(),
+        y: data[0].temp
+      };
+      this.tempChart.data.datasets[0].data.push(datapoint);
+      this.tempChart.update({
+        preservation: true
+      });
+    }
   }
 
 
   createTempChart() {
-
+    const canvas = document.getElementById('tempChart') as any;
+    const ctx = canvas.getContext('2d');
+    this.tempChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          datasets: [{
+              pointRadius: 0,
+              label: 'Temperature Data',
+              borderColor: 'rgb(255, 99, 132)',
+              data: [],
+          }]
+      },
+      // Configuration options go here
+      options: {
+        scales: {
+          xAxes: [{
+            type: 'realtime',   // x axis will auto-scroll from right to left
+            realtime: {         // per-axis options
+                duration: 20000,    // data in the past 20000 ms will be displayed
+                delay: 4000,        // delay of 1000 ms, so upcoming values are known before plotting a line
+                pause: false,       // chart is not paused
+                ttl: undefined      // data will be automatically deleted as it disappears off the chart
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              min: 0,
+              max: 60,
+            }
+          }]
+        },
+        plugins: {
+          streaming: {            // per-chart option
+              frameRate: 30       // chart is drawn 30 times every second
+          }
+        }
+      }
+    });
   }
 
   createLightChart() {
@@ -92,6 +129,7 @@ export class DeviceChartComponent implements OnInit {
       type: 'line',
       data: {
           datasets: [{
+              pointRadius: 0,
               label: 'Light Data',
               borderColor: 'rgb(255, 99, 132)',
               data: [],
