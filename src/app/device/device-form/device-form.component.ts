@@ -64,7 +64,7 @@ export class deviceFormComponent implements OnInit {
     this.deviceService.addDevice('devices/' + data.deviceId, data).then(() => {
       // Success
       this.modal.dismiss();
-    }, (err) => {
+    }, err => {
       this.errorDisplay = err;
     });
 

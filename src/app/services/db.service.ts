@@ -35,6 +35,10 @@ export class DbService {
       );
   }
 
+  getDocument(path: string): Promise<any> {
+    return this.afs.doc(path).ref.get();
+  }
+
   /**
    * @param  {string} path 'collection' or 'collection/docID'
    * @param  {object} data new data

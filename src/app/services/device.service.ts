@@ -7,6 +7,8 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { whenRendered } from '@angular/core/src/render3';
 import { DbService } from '../services/db.service';
+import { promise } from 'selenium-webdriver';
+import { userInfo } from 'os';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,6 @@ export class DeviceService {
 
   devices$() {
     var user = auth().currentUser;
-    console.log('Current User UID: ' + user.uid);
     return this.afs
       .collection("devices", ref => ref.where('uid', '==', user.uid))
       .snapshotChanges()
@@ -68,9 +69,54 @@ export class DeviceService {
   */
 
   addDevice(device: string, data: object): Promise<any> {
-    console.log('device.service.ts addDevice');
-    console.log(device + ' | ' + JSON.stringify(data));
-    return this.dbService.updateDoc(device, data);
+    // Check first to see if device exists / is already attached to this account
+    var t = this;
+    var doUpdate: boolean = true;
+    return new Promise(function (resolve, reject) {
+
+      t.dbService.getDocument(device).then(doc => {
+        console.log('got: ');
+        console.log(data['uid']);
+        console.log(doc.data()['uid']);
+        if (!doc.exists) {
+          console.log('Device doesnt exist');
+          reject('Error: Device does not exist');
+        } else if (data['uid'] == doc.data()['uid']) {
+          reject('Error: Device already attached to this account');
+        }
+      }, err => {
+        //reject(err);
+      }).catch(err => {
+        // Right now we get an error on read even if the Device exists but the UID is empty so ignore errors
+      }).then(() => {
+        // This is the equivalent of Finally
+        t.dbService.updateDoc(device, data).then(data => {
+          resolve(data);
+        }, err => {
+          reject(data);
+        });
+      });
+    });
+
+    /*
+    var checkDocExists = this.dbService.doc$(device).subscribe(deviceData => {
+      checkDocExists.unsubscribe();
+      console.log('check doc exists');
+      console.log(deviceData);
+      if (deviceData) {
+        
+      } else if () {
+
+      }
+    });
+    */
+    /*
+    if (this.dbService.doc$(device, doc => doc
+      where())) {
+      return Promise.reject('Device is already attached to this account');
+    }
+    */
+
   }
 
   /**
