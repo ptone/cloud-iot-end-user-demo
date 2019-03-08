@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { DevicePage } from './device.page';
 import { DeviceFormComponent } from './device-form/device-form.component';
 import { DeviceDetailComponent } from './device-detail/device-detail.component';
+import { DeviceChartComponent } from './device-chart/device-chart.component';
 
 const routes: Routes = [
   {
@@ -28,7 +29,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule
   ],
-  declarations: [DevicePage, DeviceFormComponent, DeviceDetailComponent],
+  declarations: [DevicePage, DeviceFormComponent, DeviceDetailComponent, DeviceChartComponent],
   entryComponents: [DeviceFormComponent]
 })
 export class DevicePageModule {}
