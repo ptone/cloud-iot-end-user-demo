@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Chart } from 'chart.js';
 import 'chartjs-plugin-streaming';
 import {
@@ -21,6 +21,8 @@ import { DeviceService } from '../../services/device.service';
   styleUrls: ['./device-chart.component.scss']
 })
 export class DeviceChartComponent implements OnInit {
+  @Input() deviceId: string;
+
   lightChart: Chart;
   tempChart: Chart;
   currentLight: number;
@@ -33,7 +35,7 @@ export class DeviceChartComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.deviceService.deviceTelemetry$('harrisTestDevice').subscribe(data => this.updateCharts(data));
+    this.deviceService.deviceTelemetry$(this.deviceId).subscribe(data => this.updateCharts(data));
   }
 
   // TODO: make this more sophisticated once concept of device being online/offline is in place.
@@ -53,16 +55,14 @@ export class DeviceChartComponent implements OnInit {
     if (this.loading) {
       this.loading = false;
     }
-    // if (!this.device || !this.device.exists) {
-    //   return;
-    // }
 
     // Get current values
     if (data.length) {
       this.currentLight = data[0].light;
       this.currentTemp = data[0].temp;
-      this.lastUpdated = data[0].time.toDate();
+      this.lastUpdated = new Date();
     }
+
     // Create or update light chart
     if (!this.lightChart) {
       this.createLightChart();
@@ -77,6 +77,7 @@ export class DeviceChartComponent implements OnInit {
       });
     }
 
+    // Create or update temperature chart
     if (!this.tempChart) {
       this.createTempChart();
     } else if (data.length) {

@@ -8,9 +8,9 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding *ngIf="device$ | async as device">
 
-    <ion-card *ngIf="device$ | async as device">
+    <ion-card>
         <ion-card-header>
             <ion-card-title>{{ device.id }}</ion-card-title>
         </ion-card-header>
@@ -21,6 +21,6 @@
             </p>
         </ion-card-content>
     </ion-card>
-    <app-device-chart></app-device-chart>
+    <app-device-chart [deviceId]="device.id"></app-device-chart>
 
 </ion-content>
