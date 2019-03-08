@@ -9,4 +9,6 @@ export {
 
 export {
   telemetryToFirestore,
+  stateToFirestore,
+  configUpdate
 } from './iot';

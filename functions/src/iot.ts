@@ -43,7 +43,7 @@ export const stateToFirestore = functions.pubsub.topic('settings').onPublish(asy
 })
 
 
-exports.configUpdate = functions.firestore
+export const configUpdate = functions.firestore
   .document('device-configs/{deviceId}')
   .onWrite(async (change: functions.Change<admin.firestore.DocumentSnapshot>, context?: functions.EventContext) => {
     if (context) {
