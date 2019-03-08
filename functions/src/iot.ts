@@ -16,7 +16,7 @@ export const telemetryToFirestore = functions.pubsub.topic('telemetry').onPublis
   try {
     await db.collection(`telemetry`).add({
       deviceId,
-      time: Date.now(),
+      time: new Date(),
       ...msg
     });
 
@@ -25,7 +25,7 @@ export const telemetryToFirestore = functions.pubsub.topic('telemetry').onPublis
     if (!doc.exists) {
       await db.collection('devices').doc(deviceId).create({
         uid: null, 
-        createdAt: Date.now()
+        createdAt: new Date()
       });
     }
   } catch(err) {
