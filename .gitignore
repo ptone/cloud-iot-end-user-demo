@@ -10,6 +10,7 @@ IonFire-0-0-1.apk
 my-release-key.keystore
 NOTES.md
 
+*.js
 *~
 *.sw[mnpcod]
 *.log
