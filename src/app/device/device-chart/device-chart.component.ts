@@ -38,6 +38,7 @@ export class DeviceChartComponent implements OnInit {
 
 
   async updateCharts(data) {
+    console.log('Updating', data);
     data.sort((a, b) => a.time.toMillis() - b.time.toMillis());
     // if (this.loading) {
     //   this.loading = false;
