@@ -16,6 +16,7 @@ export const telemetryToFirestore = functions.pubsub.topic('telemetry').onPublis
   try {
     await db.collection(`telemetry`).add({
       deviceId,
+      time: Date.now(),
       ...msg
     });
 
