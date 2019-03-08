@@ -26,22 +26,33 @@ export class DeviceChartComponent implements OnInit {
   currentLight: number;
   currentTemp: number;
   lastUpdated: Date;
+  loading = true;
 
   constructor(
     private deviceService: DeviceService,
   ) { }
 
   ngOnInit() {
-    console.log('loading chart');
     this.deviceService.deviceTelemetry$('harrisTestDevice').subscribe(data => this.updateCharts(data));
   }
 
+  // TODO: make this more sophisticated once concept of device being online/offline is in place.
+  // Currently chart will continue to show after data stops but before page is reset.
+  allowChartRender() {
+    return !this.loading;
+  }
 
   async updateCharts(data) {
     data.sort((a, b) => a.time.toMillis() - b.time.toMillis());
-    // if (this.loading) {
-    //   this.loading = false;
-    // }
+
+    // Only render chart if data is present
+    if (!data.length) {
+      return;
+    }
+
+    if (this.loading) {
+      this.loading = false;
+    }
     // if (!this.device || !this.device.exists) {
     //   return;
     // }
