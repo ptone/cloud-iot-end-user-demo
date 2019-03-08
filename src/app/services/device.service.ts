@@ -6,6 +6,7 @@ import { AuthService } from './auth.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { whenRendered } from '@angular/core/src/render3';
+import { DbService } from '../services/db.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +16,12 @@ export class DeviceService {
     private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
     private auth: AuthService,
-    ) {}
+    private dbService: DbService,
+  ) { }
 
   devices$() {
     var user = auth().currentUser;
+    console.log('Current User UID: ' + user.uid);
     return this.afs
       .collection("devices", ref => ref.where('uid', '==', user.uid))
       .snapshotChanges()
@@ -50,6 +53,8 @@ export class DeviceService {
    *
    * Creates or updates data on a collection or document.
    **/
+  // Commenting out because redundant
+  /*
   updateAt(path: string, data: Object): Promise<any> {
     const segments = path.split('/').filter(v => v);
     if (segments.length % 2) {
@@ -60,13 +65,33 @@ export class DeviceService {
       return this.afs.doc(path).set(data, { merge: true });
     }
   }
+  */
+
+  addDevice(device: string, data: object): Promise<any> {
+    console.log('device.service.ts addDevice');
+    console.log(device + ' | ' + JSON.stringify(data));
+    return this.dbService.updateDoc(device, data);
+  }
 
   /**
    * @param  {string} path path to document
    *
    * Deletes document from Firestore
    **/
-  delete(path) {
-    return this.afs.doc(path).delete();
+  deleteDevice(path: string) {
+    return this.dbService.delete(path);
+  }
+
+  updateStatus(device: string, data: Object) {
+    this.dbService.updateAt(device, data);
+  }
+
+  getDevicesByUid(uid: string) {
+    return this.dbService.collection$('devices', ref =>
+      ref
+        .where('uid', '==', uid)
+        // .orderBy('createdAt', 'desc')
+        .limit(25)
+    )
   }
 }

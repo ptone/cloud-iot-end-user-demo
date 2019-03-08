@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
-import { DbService } from '../../services/db.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { DeviceService } from '../../services/device.service';
 
 @Component({
   selector: 'app-device-form',
@@ -11,11 +11,11 @@ import { AuthService } from '../../services/auth.service';
 })
 export class deviceFormComponent implements OnInit {
   constructor(
-    private db: DbService,
+    private deviceService: DeviceService,
     private auth: AuthService,
     public modal: ModalController,
     private fb: FormBuilder // private params: NavParams
-  ) {}
+  ) { }
 
   deviceForm: FormGroup;
 
@@ -23,12 +23,16 @@ export class deviceFormComponent implements OnInit {
 
   ngOnInit() {
     const data = {
-      content: '',
+      deviceId: '',
+      deviceName: '',
       tag: '',
       status: 'pending',
       ...this.device
     };
     this.deviceForm = this.fb.group({
+      deviceId: data.deviceId,
+      deviceName: data.deviceName,
+      /*
       content: [
         data.content,
         [
@@ -36,14 +40,16 @@ export class deviceFormComponent implements OnInit {
           Validators.minLength(1),
           Validators.maxLength(250)
         ]
-      
+
       ],
+      */
       status: [data.status, [Validators.required]],
       tag: [data.tag, []]
     });
   }
 
-  async createdevice() {
+  async createDevice() {
+    console.log('attempting to create device');
     const uid = await this.auth.uid();
     const id = this.device ? this.device.id : '';
     const data = {
@@ -53,7 +59,9 @@ export class deviceFormComponent implements OnInit {
       ...this.deviceForm.value
     };
 
-    this.db.updateAt(`devices/${id}`, data);
+    //this.db.updateAt(`devices/${id}`, data);
+    console.log('deviceId: ' + data.deviceId);
+    this.deviceService.addDevice('devices/' + data.deviceId, data);
     this.modal.dismiss();
   }
 }

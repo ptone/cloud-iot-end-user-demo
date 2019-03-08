@@ -28,7 +28,7 @@
     <ion-list>
 
         <ion-item [href]="'device/' + device.id" *ngFor="let device of filtered | async; trackBy: trackById">
-            <ion-label >
+            <ion-label>
                 <!-- <span ><a [href]="'device/' + device.id">{{ device.content }}</a></span> -->
                 <span>{{ device.content }}</span>
             </ion-label>
@@ -58,6 +58,7 @@
 
     </ion-list>
 
+    <!-- Add Device '+' Button -->
     <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="presentdeviceForm()">
         <ion-fab-button>
             <ion-icon name="add"></ion-icon>

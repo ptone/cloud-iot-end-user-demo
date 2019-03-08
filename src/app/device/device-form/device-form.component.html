@@ -1,20 +1,32 @@
+<!-- Modal created when "Add Device" button clicked -->
 <ion-header>
     <ion-toolbar>
-        <ion-title *ngIf="!device">Create New device</ion-title>
+        <ion-title *ngIf="!device">Add New Device</ion-title>
         <ion-title *ngIf="device">Update {{ device.id }}</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
 
-    <div></div>
+    <form [formGroup]="deviceForm" (ngSubmit)="createDevice()">
 
-    <form [formGroup]="deviceForm" (ngSubmit)="createdevice()">
+        <ion-item>
+            <ion-label class="item item-input">Device ID</ion-label>
+            <ion-input formControlName="deviceId" type="text" placeholder="id"></ion-input>
+        </ion-item>
 
-        <ion-label>Device Task</ion-label>
-        <ion-textarea formControlName="content" type="content" placeholder="Notes" rows="2"></ion-textarea>
+        <ion-item>
+            <ion-label class="item item-input">Device Name</ion-label>
+            <ion-input formControlName="deviceName" type="text" placeholder="device"></ion-input>
+        </ion-item>
+
+        <!--
+
         <ion-label>tags</ion-label>
         <ion-textarea formControlName="tag" type="tag" placeholder="other" rows="1"></ion-textarea>
+
+        -->
+
         <ion-label>Status</ion-label>
         <ion-list>
             <ion-radio-group formControlName="status">
