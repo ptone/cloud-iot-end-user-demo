@@ -44,6 +44,8 @@
             </ion-radio-group>
         </ion-list>
 
+        <div class="error-text">{{errorDisplay}}</div>
+
         <ion-button [disabled]="deviceForm.invalid" type="submit">{{ device ? 'Update!' : 'Create!' }}</ion-button>
     </form>
 

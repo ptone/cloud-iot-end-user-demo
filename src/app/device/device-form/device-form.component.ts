@@ -18,7 +18,7 @@ export class deviceFormComponent implements OnInit {
   ) { }
 
   deviceForm: FormGroup;
-
+  errorDisplay: string;
   device;
 
   ngOnInit() {
@@ -61,7 +61,12 @@ export class deviceFormComponent implements OnInit {
 
     //this.db.updateAt(`devices/${id}`, data);
     console.log('deviceId: ' + data.deviceId);
-    this.deviceService.addDevice('devices/' + data.deviceId, data);
-    this.modal.dismiss();
+    this.deviceService.addDevice('devices/' + data.deviceId, data).then(() => {
+      // Success
+      this.modal.dismiss();
+    }, (err) => {
+      this.errorDisplay = err;
+    });
+
   }
 }
