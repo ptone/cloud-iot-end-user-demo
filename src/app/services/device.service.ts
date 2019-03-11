@@ -47,7 +47,9 @@ export class DeviceService {
           return snapshot.payload.doc.data() as Telemetry;
         })
         .filter(data => {
-          return data.time.toMillis() >= moment().subtract(20, 'seconds').valueOf();
+          // Filter out any data that comes in with a null timestamp or a badly formatted timestamp
+          const timestampIsValid = data.time && data.time.toMillis;
+          return timestampIsValid && data.time.toMillis() >= moment().subtract(20, 'seconds').valueOf();
         })
       ));
   }

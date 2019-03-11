@@ -12,10 +12,16 @@ export const telemetryToFirestore = functions.pubsub.topic('telemetry').onPublis
   const buff = new Buffer( message.data, 'base64' );
   const msg = JSON.parse( buff.toString('utf-8') );
 
+  // 1 Use server time if no time is sent from device
+  // 2 stringifying a JSON object with a date field makes the date a string. 
+  // we need to explicitly "dateify" the field after parsing back to JSON
+  const time = msg.time ? new Date(msg.time) : new Date();
+
   try {
     await db.collection(`telemetry`).add({
+      ...msg,
       deviceId,
-      ...msg
+      time
     });
     const doc = await db.collection('devices').doc(deviceId).get()
     if (!doc.exists) {
