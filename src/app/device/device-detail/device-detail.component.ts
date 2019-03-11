@@ -7,7 +7,7 @@ import { DbService } from '../../services/db.service';
   templateUrl: './device-detail.component.html',
   styleUrls: ['./device-detail.component.scss']
 })
-export class deviceDetailComponent implements OnInit {
+export class DeviceDetailComponent implements OnInit {
   device$;
 
   constructor(private route: ActivatedRoute, private db: DbService) {}
