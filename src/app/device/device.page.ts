@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth.service';
 import { ModalController } from '@ionic/angular';
 import { DeviceFormComponent } from './device-form/device-form.component';
 import { Observable } from 'rx';
+import { DeviceService } from '../services/device.service';
 
 @Component({
   selector: 'app-device',
@@ -20,20 +21,25 @@ export class DevicePage implements OnInit {
   filter = new BehaviorSubject(null);
 
   constructor(
-    public db: DbService,
+    public dbService: DbService,
+    public deviceService: DeviceService,
     public modal: ModalController,
     public auth: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
+    console.log('uid');
     this.devices = this.auth.user$.pipe(
       switchMap(user =>
-        this.db.collection$('devices', ref =>
+        this.deviceService.getDevicesByUid(user.uid)
+        /*
+        this.dbService.collection$('devices', ref =>
           ref
             .where('uid', '==', user.uid)
             // .orderBy('createdAt', 'desc')
             .limit(25)
         )
+        */
       ),
       shareReplay(1)
     );
@@ -52,18 +58,19 @@ export class DevicePage implements OnInit {
   }
 
   deletedevice(device) {
-    this.db.delete(`devices/${device.id}`);
+    this.deviceService.deleteDevice(`devices/${device.id}`);
   }
 
-  toggleStatus(device) {
+  updateStatus(device) {
     const status = device.status === 'complete' ? 'pending' : 'complete';
-    this.db.updateAt(`devices/${device.id}`, { status });
+    this.deviceService.updateStatus(`devices/${device.id}`, { status });
   }
 
   updateFilter(val) {
     this.filter.next(val);
   }
 
+  // Called when Add Device button click
   async presentdeviceForm(device?: any) {
     const modal = await this.modal.create({
       component: DeviceFormComponent,

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DbService {
-  constructor(private afs: AngularFirestore) {}
+  constructor(private afs: AngularFirestore) { }
 
   collection$(path, query?) {
     return this.afs
@@ -33,6 +33,20 @@ export class DbService {
           return { id: doc.payload.id, ...doc.payload.data() };
         })
       );
+  }
+
+  getDocument(path: string): Promise<any> {
+    return this.afs.doc(path).ref.get();
+  }
+
+  /**
+   * @param  {string} path 'collection' or 'collection/docID'
+   * @param  {object} data new data
+   *
+   * Updates an existing document.
+   **/
+  updateDoc(path: string, data: Object): Promise<any> {
+    return this.afs.doc(path).update(data);
   }
 
   /**
