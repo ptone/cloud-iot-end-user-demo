@@ -6,3 +6,9 @@ export {
   unsubscribeFromTopic,
   sendOnFirestoreCreate
 } from './fcm';
+
+export {
+  telemetryToFirestore,
+  stateToFirestore,
+  configUpdate
+} from './iot';

@@ -9,7 +9,7 @@ import { DeviceService } from '../../services/device.service';
   templateUrl: './device-form.component.html',
   styleUrls: ['./device-form.component.scss']
 })
-export class deviceFormComponent implements OnInit {
+export class DeviceFormComponent implements OnInit {
   constructor(
     private deviceService: DeviceService,
     private auth: AuthService,

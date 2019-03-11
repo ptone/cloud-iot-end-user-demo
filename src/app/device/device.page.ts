@@ -5,7 +5,7 @@ import { DbService } from '../services/db.service';
 import { AuthService } from '../services/auth.service';
 
 import { ModalController } from '@ionic/angular';
-import { deviceFormComponent } from './device-form/device-form.component';
+import { DeviceFormComponent } from './device-form/device-form.component';
 import { Observable } from 'rx';
 import { DeviceService } from '../services/device.service';
 
@@ -14,7 +14,7 @@ import { DeviceService } from '../services/device.service';
   templateUrl: './device.page.html',
   styleUrls: ['./device.page.scss']
 })
-export class devicePage implements OnInit {
+export class DevicePage implements OnInit {
   devices;
   filtered;
 
@@ -73,7 +73,7 @@ export class devicePage implements OnInit {
   // Called when Add Device button click
   async presentdeviceForm(device?: any) {
     const modal = await this.modal.create({
-      component: deviceFormComponent,
+      component: DeviceFormComponent,
       componentProps: { device }
     });
     return await modal.present();

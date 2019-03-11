@@ -10,6 +10,9 @@ import { DbService } from '../services/db.service';
 import { promise } from 'selenium-webdriver';
 import { userInfo } from 'os';
 import { reject } from 'q';
+import * as moment from 'moment';
+import { Telemetry } from '../shared/types';
+
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +26,9 @@ export class DeviceService {
   ) { }
 
   devices$() {
-    var user = auth().currentUser;
+    const user = auth().currentUser;
     return this.afs
-      .collection("devices", ref => ref.where('uid', '==', user.uid))
+      .collection('devices', ref => ref.where('uid', '==', user.uid))
       .snapshotChanges()
       .pipe(
         map(actions => {
@@ -36,6 +39,25 @@ export class DeviceService {
           });
         })
       );
+  }
+
+  // Returns an observable of the telemetry data for a single device.
+  deviceTelemetry$(deviceId: string): Observable<any> {
+    return this.afs.collection(`telemetry`,
+      telemetry => telemetry.where('deviceId', '==', deviceId)
+        .orderBy('time', 'desc')
+        .limit(30))
+      .stateChanges()
+      .pipe(
+        map(snapshots => snapshots.map(snapshot => {
+          return snapshot.payload.doc.data() as Telemetry;
+        })
+          .filter(data => {
+            // Filter out any data that comes in with a null timestamp or a badly formatted timestamp
+            const timestampIsValid = data.time && data.time.toMillis;
+            return timestampIsValid && data.time.toMillis() >= moment().subtract(20, 'seconds').valueOf();
+          })
+        ));
   }
 
   doc$(path): Observable<any> {
