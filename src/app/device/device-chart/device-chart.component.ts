@@ -108,6 +108,7 @@ export class DeviceChartComponent implements OnInit {
       },
       // Configuration options go here
       options: {
+        maintainAspectRatio: false,
         scales: {
           xAxes: [{
             type: 'realtime',   // x axis will auto-scroll from right to left
@@ -149,6 +150,7 @@ export class DeviceChartComponent implements OnInit {
       },
       // Configuration options go here
       options: {
+        maintainAspectRatio: false,
         scales: {
           xAxes: [{
             type: 'realtime',   // x axis will auto-scroll from right to left
