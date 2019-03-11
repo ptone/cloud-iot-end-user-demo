@@ -122,6 +122,12 @@ export class DeviceService {
     });
   };
 
+  /*
+  deviceCanBeUpdated$(deviceId: string): Observable<boolean> {
+    
+  }
+  */
+
   /**
    * @param  {string} path path to document
    *

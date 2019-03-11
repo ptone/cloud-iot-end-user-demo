@@ -9,6 +9,7 @@ import { DevicePage } from './device.page';
 import { DeviceFormComponent } from './device-form/device-form.component';
 import { DeviceDetailComponent } from './device-detail/device-detail.component';
 import { DeviceChartComponent } from './device-chart/device-chart.component';
+import { DeviceSettingsComponent } from './device-settings/device-settings.component';
 
 const routes: Routes = [
   {
@@ -29,7 +30,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule
   ],
-  declarations: [DevicePage, DeviceFormComponent, DeviceDetailComponent, DeviceChartComponent],
+  declarations: [DevicePage, DeviceFormComponent, DeviceDetailComponent, DeviceChartComponent, DeviceSettingsComponent],
   entryComponents: [DeviceFormComponent]
 })
-export class DevicePageModule {}
+export class DevicePageModule { }
