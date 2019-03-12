@@ -63,7 +63,8 @@ export class DevicePage implements OnInit {
 
   updateStatus(device) {
     const status = device.status === 'complete' ? 'pending' : 'complete';
-    this.deviceService.updateStatus(`devices/${device.id}`, { status });
+    // Todo: refactor this method
+    //this.deviceService.updateStatus(`devices/${device.id}`, { status });
   }
 
   updateFilter(val) {

@@ -61,7 +61,7 @@ export class DeviceFormComponent implements OnInit {
 
     //this.db.updateAt(`devices/${id}`, data);
     console.log('deviceId: ' + data.deviceId);
-    this.deviceService.addDevice('devices/' + data.deviceId, data).then(() => {
+    this.deviceService.addDevice(data.deviceId, data).then(() => {
       // Success
       this.modal.dismiss();
     }, err => {
