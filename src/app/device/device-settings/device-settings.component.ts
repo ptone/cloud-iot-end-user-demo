@@ -8,13 +8,16 @@ import { DeviceService } from '../../services/device.service';
   styleUrls: ['./device-settings.component.scss']
 })
 export class DeviceSettingsComponent implements OnInit {
-  canBeUpdated$;
+  updateDisabled: boolean;
 
   constructor(private route: ActivatedRoute, private deviceService: DeviceService) { }
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.canBeUpdated$ = this.deviceService.deviceCanBeUpdated$(`devices/${id}`);
+    const deviceId = this.route.snapshot.paramMap.get('id');
+
+    this.deviceService.deviceCanBeUpdated$(deviceId).subscribe(val => {
+      this.updateDisabled = !val;
+    });
   }
 
 }

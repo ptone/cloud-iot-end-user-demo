@@ -104,7 +104,7 @@ export class DeviceService {
   // Rejects if the device exists and is already attached to this account
   // Resolves in all other cases (Device does not exist, exists but is attached to another account, exists but UID is null)
   deviceCanBeAdded(device: string, data: object): Promise<string> {
-    var t = this;
+    let t = this;
     return new Promise(function (resolve, reject) {
       t.dbService.getDocument(device).then(doc => {
         if (!doc.exists) {
@@ -122,11 +122,31 @@ export class DeviceService {
     });
   };
 
-  /*
+
+  // Observe both device and device-config, return whether or not they match
+  // Returns true (can be updated) if the field is not present on both objects
   deviceCanBeUpdated$(deviceId: string): Observable<boolean> {
-    
+    let configSentToDevice: boolean;
+    let deviceConfig: boolean;
+    let t = this;
+
+    const observable = new Observable<boolean>(observer => {
+
+      t.dbService.doc$('device-configs/' + deviceId).subscribe(val => {
+        deviceConfig = val['setting'];
+        observer.next(configSentToDevice === deviceConfig);
+      });
+
+      t.dbService.doc$('devices/' + deviceId).subscribe(val => {
+        configSentToDevice = val['setting'];
+        observer.next(configSentToDevice === deviceConfig);
+      });
+
+    });
+
+    return observable;
   }
-  */
+
 
   /**
    * @param  {string} path path to document
