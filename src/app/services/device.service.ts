@@ -126,26 +126,39 @@ export class DeviceService {
   // Observe both device and device-config, return whether or not they match
   // Returns true (can be updated) if the field is not present on both objects
   deviceCanBeUpdated$(deviceId: string): Observable<boolean> {
-    let configSentToDevice = { lower: 0, upper: 0 };
-    let deviceConfig = { lower: 0, upper: 0 };
+    let configSentToDevice;
+    // Default settings
+    let deviceConfig = { lower: 0, upper: 70 };
     let t = this;
 
     const observable = new Observable<boolean>(observer => {
 
 
-      t.dbService.doc$('device-configs/' + deviceId).subscribe(val => {
+      t.dbService.doc$('devices/' + deviceId).subscribe(val => {
         deviceConfig = val['setting'];
-        observer.next(configSentToDevice['lower'] == deviceConfig['lower'] && configSentToDevice['upper'] == deviceConfig['upper']);
+        observer.next(this._uninitializedOrEqual(configSentToDevice, deviceConfig));
       });
 
-      t.dbService.doc$('devices/' + deviceId).subscribe(val => {
+      t.dbService.doc$('device-configs/' + deviceId).subscribe(val => {
         configSentToDevice = val['setting'];
-        observer.next(configSentToDevice['lower'] == deviceConfig['lower'] && configSentToDevice['upper'] == deviceConfig['upper']);
+        observer.next(this._uninitializedOrEqual(configSentToDevice, deviceConfig));
       });
 
     });
 
     return observable;
+  }
+
+  // Determines if Device can be updated
+  // Allows updates if any of the config fields are uninitialized/null
+  private _uninitializedOrEqual(configSentToDevice, deviceConfig) {
+    if (configSentToDevice == null || !('lower' in configSentToDevice) || !('upper' in configSentToDevice)) {
+      return true
+    }
+    if (deviceConfig == null || !('lower' in deviceConfig) || !('upper' in deviceConfig)) {
+      return false
+    }
+    return (configSentToDevice['lower'] == deviceConfig['lower'] && configSentToDevice['upper'] == deviceConfig['upper'])
   }
 
 
@@ -158,12 +171,21 @@ export class DeviceService {
     return this.dbService.delete(path);
   }
 
+  /**
+   * @param  {string} device deviceID
+   *
+   * Clears device UID and settings
+   **/
+  releaseDevice(device: string) {
+    return this.dbService.updateDoc('devices/' + device, { uid: '' });
+  }
+
   getDocument(path: string): Promise<any> {
     return this.dbService.getDocument(path);
   }
 
   updateConfig(device: string, data: object): Promise<any> {
-    return this.dbService.updateDoc('device-configs/' + device, { setting: data });
+    return this.dbService.updateAt('device-configs/' + device, { setting: data });
   }
 
   /*

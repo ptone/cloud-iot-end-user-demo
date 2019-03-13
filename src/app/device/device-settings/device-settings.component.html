@@ -15,10 +15,10 @@
             </ion-item>
             <ion-item>
                 <ion-label position="fixed">
-                    lower: {{tempSetting.lower}}
+                    lower: {{tempSetting ? tempSetting.lower : 0}}
                 </ion-label>
                 <ion-label position="fixed">
-                    upper: {{tempSetting.upper}}
+                    upper: {{tempSetting ? tempSetting.upper : 70}}
                 </ion-label>
             </ion-item>
             <ion-item class="error-text">

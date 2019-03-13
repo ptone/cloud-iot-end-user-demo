@@ -10,7 +10,7 @@ import { DeviceService } from '../../services/device.service';
 
 export class DeviceSettingsComponent implements OnInit {
   updateDisabled: boolean;
-  tempSetting = { lower: 0, upper: 0 };
+  tempSetting;
   errorDisplay: string;
   device;
 
@@ -20,7 +20,7 @@ export class DeviceSettingsComponent implements OnInit {
     const deviceId = this.route.snapshot.paramMap.get('id');
     this.deviceService.getDocument('devices/' + deviceId).then(doc => {
       this.device = doc.data();
-      this.tempSetting = doc.data()['setting'];
+      this.tempSetting = doc.data()['setting'] ? doc.data()['setting'] : { lower: 0, upper: 70 };
     });
 
     // Determine whether or not update button should be greyed out
@@ -32,6 +32,7 @@ export class DeviceSettingsComponent implements OnInit {
   updateConfig() {
     this.deviceService.updateConfig(this.device.deviceId, this.tempSetting).then(() => {
       // Successfully updated
+      this.errorDisplay = "";
     }, err => {
       this.errorDisplay = err;
     });

@@ -57,7 +57,8 @@ export class DevicePage implements OnInit {
     );
   }
 
-  deletedevice(device) {
+  // Clears the the UID and settings fields of the device
+  deleteDevice(device) {
     this.deviceService.deleteDevice(`devices/${device.id}`);
   }
 
