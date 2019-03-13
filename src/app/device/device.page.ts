@@ -59,7 +59,7 @@ export class DevicePage implements OnInit {
 
   // Clears the the UID and settings fields of the device
   deleteDevice(device) {
-    this.deviceService.deleteDevice(`devices/${device.id}`);
+    this.deviceService.releaseDevice(device.id);
   }
 
   updateStatus(device) {
