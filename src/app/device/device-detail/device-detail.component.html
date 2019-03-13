@@ -6,8 +6,8 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content padding *ngIf="device$ | async as device">
-    <ion-row>
+<ion-content>
+    <ion-row padding *ngIf="device$ | async as device; else loadingOrError">
         <ion-col
             size-lg="6" 
             offset-lg="3">
@@ -26,7 +26,27 @@
         </ion-col>
 
     </ion-row>
+    <ng-template #loadingOrError>
+        <ng-container *ngIf="errorObject; else loading">
+            <ion-row>
+                <ion-col size-lg="6" offset-lg="3">
+                    <ion-card>
+                        <ion-card-header>
+                            <ion-card-title>Error</ion-card-title>
+                        </ion-card-header>
 
+                        <ion-card-content>
+                            {{ errorObject }}
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ng-container>
 
-
+        <ng-template #loading>
+        <ion-row>
+            Loading ...
+        </ion-row>
+        </ng-template>
+    </ng-template>
 </ion-content>
