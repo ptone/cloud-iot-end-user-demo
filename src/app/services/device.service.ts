@@ -93,8 +93,8 @@ export class DeviceService {
 
   addDevice(device: string, data: object): Promise<any> {
     // Check first to see if device exists / is already attached to this account
-    return this.deviceCanBeAdded(device, data).then(() => {
-      return this.dbService.updateDoc(device, data);
+    return this._deviceCanBeAdded(device, data).then(() => {
+      return this.dbService.updateDoc('devices/' + device, data);
     }, err => {
       return Promise.reject(err);
     });
@@ -103,10 +103,10 @@ export class DeviceService {
   // Check if a device can be added.
   // Rejects if the device exists and is already attached to this account
   // Resolves in all other cases (Device does not exist, exists but is attached to another account, exists but UID is null)
-  deviceCanBeAdded(device: string, data: object): Promise<string> {
-    var t = this;
+  private _deviceCanBeAdded(device: string, data: object): Promise<string> {
+    let t = this;
     return new Promise(function (resolve, reject) {
-      t.dbService.getDocument(device).then(doc => {
+      t.dbService.getDocument('devices/' + device).then(doc => {
         if (!doc.exists) {
           reject('Error: Device does not exist');
         } else if (data['uid'] == doc.data()['uid']) {
@@ -122,6 +122,33 @@ export class DeviceService {
     });
   };
 
+
+  // Observe both device and device-config, return whether or not they match
+  // Returns true (can be updated) if the field is not present on both objects
+  deviceCanBeUpdated$(deviceId: string): Observable<boolean> {
+    let configSentToDevice = { lower: 0, upper: 0 };
+    let deviceConfig = { lower: 0, upper: 0 };
+    let t = this;
+
+    const observable = new Observable<boolean>(observer => {
+
+
+      t.dbService.doc$('device-configs/' + deviceId).subscribe(val => {
+        deviceConfig = val['setting'];
+        observer.next(configSentToDevice['lower'] == deviceConfig['lower'] && configSentToDevice['upper'] == deviceConfig['upper']);
+      });
+
+      t.dbService.doc$('devices/' + deviceId).subscribe(val => {
+        configSentToDevice = val['setting'];
+        observer.next(configSentToDevice['lower'] == deviceConfig['lower'] && configSentToDevice['upper'] == deviceConfig['upper']);
+      });
+
+    });
+
+    return observable;
+  }
+
+
   /**
    * @param  {string} path path to document
    *
@@ -131,11 +158,21 @@ export class DeviceService {
     return this.dbService.delete(path);
   }
 
+  getDocument(path: string): Promise<any> {
+    return this.dbService.getDocument(path);
+  }
+
+  updateConfig(device: string, data: object): Promise<any> {
+    return this.dbService.updateDoc('device-configs/' + device, { setting: data });
+  }
+
+  /*
   updateStatus(device: string, data: Object) {
     this.dbService.updateAt(device, data);
   }
+  */
 
-  getDevicesByUid(uid: string) {
+  getDevicesByUid(uid: string): Observable<any> {
     return this.dbService.collection$('devices', ref =>
       ref
         .where('uid', '==', uid)

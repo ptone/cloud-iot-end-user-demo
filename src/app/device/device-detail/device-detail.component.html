@@ -1,3 +1,4 @@
+<!-- Device Detail Page-->
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
@@ -8,21 +9,24 @@
 
 <ion-content>
     <ion-row padding *ngIf="device$ | async as device; else loadingOrError">
-        <ion-col
-            size-lg="6" 
-            offset-lg="3">
+        <ion-col size-lg="6" offset-lg="3">
+            <!-- Device Details Card -->
             <ion-card>
                 <ion-card-header>
-                    <ion-card-title>{{ device.id }}</ion-card-title>
+                    <ion-card-title>Device Details</ion-card-title>
                 </ion-card-header>
-
                 <ion-card-content>
-                    <p *ngFor="let prop of device | keyvalue">
-                        <strong>{{ prop.key }}</strong>: {{ prop.value }}
-                    </p>
+                    <ion-list inset=true>
+                        <ion-item *ngFor="let prop of device | keyvalue">
+                            <strong>{{ prop.key }}</strong>: {{ prop.value }}
+                        </ion-item>
+                    </ion-list>
                 </ion-card-content>
             </ion-card>
+            <!-- Device Metric Charts Card -->
             <app-device-chart [deviceId]="device.id"></app-device-chart>
+            <!-- Update Device Settings Card -->
+            <app-settings></app-settings>
         </ion-col>
 
     </ion-row>
@@ -45,9 +49,9 @@
         </ng-container>
 
         <ng-template #loading>
-        <ion-row>
-            Loading ...
-        </ion-row>
+            <ion-row>
+                Loading ...
+            </ion-row>
         </ng-template>
     </ng-template>
 </ion-content>
