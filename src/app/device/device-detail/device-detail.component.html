@@ -15,13 +15,14 @@
             <!-- Device Details Card -->
             <ion-card>
                 <ion-card-header>
-                    <ion-card-title>{{ device.id }}</ion-card-title>
+                    <ion-card-title>Device Details</ion-card-title>
                 </ion-card-header>
-
                 <ion-card-content>
-                    <p *ngFor="let prop of device | keyvalue">
-                        <strong>{{ prop.key }}</strong>: {{ prop.value }}
-                    </p>
+                    <ion-list inset=true>
+                        <ion-item *ngFor="let prop of device | keyvalue">
+                            <strong>{{ prop.key }}</strong>: {{ prop.value }}
+                        </ion-item>
+                    </ion-list>
                 </ion-card-content>
             </ion-card>
             <!-- Device Metric Charts Card -->

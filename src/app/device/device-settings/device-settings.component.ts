@@ -11,6 +11,7 @@ import { DeviceService } from '../../services/device.service';
 export class DeviceSettingsComponent implements OnInit {
   updateDisabled: boolean;
   tempSetting = { lower: 0, upper: 0 };
+  errorDisplay: string;
   device;
 
   constructor(private route: ActivatedRoute, private deviceService: DeviceService) { }
@@ -18,8 +19,6 @@ export class DeviceSettingsComponent implements OnInit {
   ngOnInit() {
     const deviceId = this.route.snapshot.paramMap.get('id');
     this.deviceService.getDocument('devices/' + deviceId).then(doc => {
-      console.log('get doc');
-      console.log(doc.data());
       this.device = doc.data();
       this.tempSetting = doc.data()['setting'];
     });
@@ -31,10 +30,10 @@ export class DeviceSettingsComponent implements OnInit {
   }
 
   updateConfig() {
-    console.log(this.tempSetting);
-    console.log(this.device.deviceId);
     this.deviceService.updateConfig(this.device.deviceId, this.tempSetting).then(() => {
-      console.log('success');
+      // Successfully updated
+    }, err => {
+      this.errorDisplay = err;
     });
   }
 
