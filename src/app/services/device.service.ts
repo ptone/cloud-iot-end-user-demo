@@ -126,11 +126,12 @@ export class DeviceService {
   // Observe both device and device-config, return whether or not they match
   // Returns true (can be updated) if the field is not present on both objects
   deviceCanBeUpdated$(deviceId: string): Observable<boolean> {
-    let configSentToDevice: object;
-    let deviceConfig: object;
+    let configSentToDevice = { lower: 0, upper: 0 };
+    let deviceConfig = { lower: 0, upper: 0 };
     let t = this;
 
     const observable = new Observable<boolean>(observer => {
+
 
       t.dbService.doc$('device-configs/' + deviceId).subscribe(val => {
         deviceConfig = val['setting'];
