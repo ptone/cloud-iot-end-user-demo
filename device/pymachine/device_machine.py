@@ -7,7 +7,7 @@ import paho.mqtt.client as mqtt
 from aiy.enviro import EnviroKit
 from aiy.cloudiot import CloudIot
 from luma.core.render import canvas
-from PIL import ImageDraw
+from PIL import ImageDraw, ImageFont
 from time import sleep
 
 
@@ -15,6 +15,17 @@ from time import sleep
 
 from . import mqtt_util
 
+def make_font(name, size):
+    #  font_path = os.path.abspath(os.path.join(
+        #  os.path.dirname(__file__), 'fonts', name))
+    #  return ImageFont.truetype(font_path, size)
+    return ImageFont.truetype(name, size)
+
+
+
+def update_display(display, msg):
+    with canvas(display) as draw:
+        draw.text((0, 5), msg, fill='white')
 
 class Device(object):
     def __init__(self, device_id='pi-test', private_key="temp_key"):
@@ -38,6 +49,7 @@ class Device(object):
         self.telemetry_topic = '/devices/{}/events'.format(self.device_id) 
         self.state_topic = '/devices/{}/events/settings'.format(self.device_id) 
         self.enviro = EnviroKit()
+        self.claimed = False
 
     def get_client(self):
         self.client = mqtt.Client(client_id=self.client_id, userdata=self)
@@ -125,9 +137,10 @@ class Device(object):
             now = datetime.datetime.now()
             if self.last_publish < (now - datetime.timedelta(seconds=3)):
                 data = {"temp": self.enviro.temperature, "light": self.enviro.ambient_light}
-                print("publishing")
-                self.client.publish(self.telemetry_topic, json.dumps(data))
-                self.last_publish = now
+                if self.claimed:
+                    print("publishing")
+                    self.client.publish(self.telemetry_topic, json.dumps(data))
+                    self.last_publish = now
         #  only reports if state dirty flag set
         # self.report_state()
 
@@ -137,6 +150,16 @@ class Device(object):
         print(msg.payload)
         payload_data = json.loads(msg.payload.decode('utf-8'))
         self.settings = payload_data["setting"]
+        font = make_font("code2000.ttf", 36)
+        if payload_data["claimed"]:
+            self.claimed = True
+            with canvas(self.enviro.display) as draw:
+                draw.text((1, -5), "hello", fill="white", font=font)
+        else:
+            self.claimed = False
+            with canvas(self.enviro.display) as draw:
+                draw.text((1, -5), "bye", fill="white", font=font)
+
         print(self.settings)
         self.client.publish(self.state_topic, msg.payload)
         print("ok")
