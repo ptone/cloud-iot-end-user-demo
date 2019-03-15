@@ -4,7 +4,7 @@
             <ion-menu-button autoHide></ion-menu-button>
         </ion-buttons>
 
-        <ion-title>My Devices</ion-title>
+        <ion-title>Devices</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -15,7 +15,7 @@
             <ion-card>
                 <ion-segment (ionChange)="updateFilter($event.detail.value)">
                     <ion-segment-button value="" checked>
-                        All
+                        Claimed
                     </ion-segment-button>
                     <!--  Disabling this part for now since there is no info for online/offline -->
                     <!--
@@ -35,12 +35,10 @@
                             <span>{{ device.deviceNickname }}</span>
                         </ion-label>
 
-                        <ion-button (click)="presentdeviceForm(device)" color="tertiary">
-                            <ion-icon name="create"></ion-icon>
-                        </ion-button>
 
-                        <ion-button (click)="releaseDevice(device)" color="danger">
-                            <ion-icon name="trash"></ion-icon>
+
+                        <ion-button (click)="releaseDevice(device)" color="white">
+                             <ion-icon name="remove-circle" color="danger"></ion-icon> &nbsp; Release
                         </ion-button>
                     </ion-item>
                 </ion-list>

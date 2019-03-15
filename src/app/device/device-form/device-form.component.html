@@ -1,7 +1,7 @@
 <!-- Modal created when "Add Device" button clicked -->
 <ion-header>
     <ion-toolbar>
-        <ion-title *ngIf="!device">Add New Device</ion-title>
+        <ion-title *ngIf="!device">Claim Device</ion-title>
         <ion-title *ngIf="device">Update {{ device.id }}</ion-title>
     </ion-toolbar>
 </ion-header>
@@ -11,12 +11,12 @@
     <form [formGroup]="deviceForm" (ngSubmit)="createDevice()">
 
         <ion-item>
-            <ion-label class="item item-input">Device ID</ion-label>
+            <ion-label class="item item-input">Claim Code</ion-label>
             <ion-input formControlName="deviceId" type="text" placeholder="id"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label class="item item-input">Device Nickname</ion-label>
+            <ion-label class="item item-input">Nickname</ion-label>
             <ion-input formControlName="deviceNickname" type="text" placeholder="device"></ion-input>
         </ion-item>
 
@@ -48,7 +48,7 @@
 
         <div class="error-text">{{errorDisplay}}</div>
 
-        <ion-button [disabled]="deviceForm.invalid" type="submit">{{ device ? 'Update!' : 'Create!' }}</ion-button>
+        <ion-button [disabled]="deviceForm.invalid" type="submit">{{ device ? 'Claim' : 'Claim' }}</ion-button>
     </form>
 
 

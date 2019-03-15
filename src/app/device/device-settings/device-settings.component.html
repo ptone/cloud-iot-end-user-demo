@@ -1,14 +1,14 @@
 <!-- Card For Sending Config Updates to Device -->
 <ion-card>
     <ion-card-header>
-        <ion-card-title>Device Configuration</ion-card-title>
+        <ion-card-title>Device Settings</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
         <ion-list inset=true>
             <ion-item>
                 <ion-label position="floating">Temperature Threshold</ion-label>
-                <ion-range dualKnobs="true" [(ngModel)]="tempSetting" pin="true" min="-50" max="150" color="primary">
+                <ion-range dualKnobs="true" [(ngModel)]="tempSetting" pin="true" min="20" max="45" color="primary">
                     <ion-icon color="primary" size="small" slot="start" name="thermometer"></ion-icon>
                     <ion-icon color="primary" size="medium" slot="end" name="thermometer"></ion-icon>
                 </ion-range>
@@ -28,7 +28,7 @@
                 <ion-button size="default" [disabled]=updateDisabled (click)="updateConfig()">
                     <ion-item *ngIf=!updateDisabled>Update</ion-item>
                     <ion-item *ngIf=updateDisabled>
-                        <ion-item>Syncing Config to Device</ion-item>
+                        <ion-item>Updating&nbsp;</ion-item>
                         <ion-spinner name="crescent"></ion-spinner>
                     </ion-item>
                 </ion-button>
