@@ -10,53 +10,43 @@
 
 <ion-content padding>
 
-
-    <ion-segment (ionChange)="updateFilter($event.detail.value)">
-        <ion-segment-button value="" checked>
-            All
-        </ion-segment-button>
+    <ion-row>
+        <ion-col size-lg="6" offset-lg="3">
+            <ion-card>
+                <ion-segment (ionChange)="updateFilter($event.detail.value)">
+                    <ion-segment-button value="" checked>
+                        All
+                    </ion-segment-button>
+                    <!--  Disabling this part for now since there is no info for online/offline -->
+                    <!--
         <ion-segment-button value="complete">
             Online
         </ion-segment-button>
         <ion-segment-button value="pending">
             Offline
         </ion-segment-button>
+        -->
+                </ion-segment>
 
+                <ion-list>
+                    <ion-item [href]="'device/' + device.id" *ngFor="let device of filtered | async; trackBy: trackById">
+                        <ion-label>
+                            <!-- <span ><a [href]="'device/' + device.id">{{ device.content }}</a></span> -->
+                            <span>{{ device.deviceNickname }}</span>
+                        </ion-label>
 
-    </ion-segment>
+                        <ion-button (click)="presentdeviceForm(device)" color="tertiary">
+                            <ion-icon name="create"></ion-icon>
+                        </ion-button>
 
-    <ion-list>
-
-        <ion-item [href]="'device/' + device.id" *ngFor="let device of filtered | async; trackBy: trackById">
-            <ion-label>
-                <!-- <span ><a [href]="'device/' + device.id">{{ device.content }}</a></span> -->
-                <span>{{ device.content }}</span>
-            </ion-label>
-
-            <ion-label>
-                <span>{{ device.tag }}</span>
-                <!-- <span ><a [href]="'device/' + device.id">{{ device.tag }}</a></span> -->
-
-            </ion-label>
-
-            <!-- <ion-checkbox (click)="toggleStatus(device)" [checked]="device.status === 'complete'" color="success"></ion-checkbox> -->
-
-
-            <!-- <ion-button [href]="'device/' + device.id">
-                <ion-icon name="eye"></ion-icon>
-            </ion-button> -->
-
-            <ion-button (click)="presentdeviceForm(device)" color="tertiary">
-                <ion-icon name="create"></ion-icon>
-            </ion-button>
-
-            <ion-button (click)="deletedevice(device)" color="danger">
-                <ion-icon name="trash"></ion-icon>
-            </ion-button>
-        </ion-item>
-
-
-    </ion-list>
+                        <ion-button (click)="releaseDevice(device)" color="danger">
+                            <ion-icon name="trash"></ion-icon>
+                        </ion-button>
+                    </ion-item>
+                </ion-list>
+            </ion-card>
+        </ion-col>
+    </ion-row>
 
     <!-- Add Device '+' Button -->
     <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="presentdeviceForm()">

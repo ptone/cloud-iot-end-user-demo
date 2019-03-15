@@ -24,14 +24,12 @@ export class DeviceFormComponent implements OnInit {
   ngOnInit() {
     const data = {
       deviceId: '',
-      deviceName: '',
-      tag: '',
-      status: 'pending',
+      deviceNickname: '',
       ...this.device
     };
     this.deviceForm = this.fb.group({
       deviceId: data.deviceId,
-      deviceName: data.deviceName,
+      deviceNickname: data.deviceNickname,
       /*
       content: [
         data.content,
@@ -42,9 +40,9 @@ export class DeviceFormComponent implements OnInit {
         ]
 
       ],
-      */
       status: [data.status, [Validators.required]],
       tag: [data.tag, []]
+            */
     });
   }
 
