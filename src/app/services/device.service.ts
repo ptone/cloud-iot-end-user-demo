@@ -167,7 +167,7 @@ export class DeviceService {
    *
    * Deletes document from Firestore
    **/
-  deleteDevice(path: string) {
+  deleteDocument(path: string) {
     return this.dbService.delete(path);
   }
 
