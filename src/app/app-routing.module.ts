@@ -15,14 +15,21 @@ const routes: Routes = [
     ,
     canActivate: [AuthGuard]
   },
-  { path: 'login', loadChildren: './loginpage/loginpage.module#LoginpagePageModule',
+  {
+    path: 'admin',
+    loadChildren: './admin/admin.module#AdminPageModule'
+    ,
     canActivate: [AuthGuard]
   },
-  {path: '**', redirectTo: 'login'}
+  {
+    path: 'login', loadChildren: './loginpage/loginpage.module#LoginpagePageModule',
+    canActivate: [AuthGuard]
+  },
+  { path: '**', redirectTo: 'login' }
 
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

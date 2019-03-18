@@ -13,8 +13,13 @@
                 <ion-item (click)="mymenu.close()">
                     <app-login></app-login>
                 </ion-item>
+
                 <ion-item href="/device" (click)="closeMenu()">
                     <ion-label>Devices</ion-label>
+                </ion-item>
+
+                <ion-item href="/admin" (click)="closeMenu()">
+                    <ion-label>Admin</ion-label>
                 </ion-item>
 
                 <ion-item href="/" disabled>

@@ -39,12 +39,6 @@ export class AppComponent {
     });
   }
 
-  async resetTutorial() {
-    await this.storage.set('tutorialComplete', false);
-    await this.router.navigateByUrl('/tutorial');
-    this.menu.close();
-  }
-
   closeMenu() {
     this.menu.close();
   }
