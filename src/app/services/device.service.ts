@@ -94,10 +94,16 @@ export class DeviceService {
   addDevice(device: string, data: object): Promise<any> {
     // Check first to see if device exists / is already attached to this account
     return this._deviceCanBeAdded(device, data).then(() => {
-        return this.dbService.updateDoc('devices/' + device, data).then(() => {
-          this.dbService.updateDoc('device-configs/' + device, { claimed: true })        
-        })
+      return this.dbService.updateDoc('devices/' + device, data).then(() => {
+        this.dbService.updateDoc('device-configs/' + device, { claimed: true })
+      }, err => {
+        // We are only getting here if the device does not exist
+        if (String(err).includes("insufficient permissions")) {
+          return Promise.reject('Invalid Device')
+        }
+      })
     }, err => {
+
       return Promise.reject(err);
     });
   }
@@ -115,6 +121,7 @@ export class DeviceService {
           reject('Error: Device already attached to this account');
         }
       }, err => {
+
         // Expected error on read even if the Device exists but the UID is empty
         resolve();
       }).catch(err => {
