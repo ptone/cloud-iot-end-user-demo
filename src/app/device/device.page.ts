@@ -58,9 +58,10 @@ export class DevicePage implements OnInit {
   }
 
   // Deletes any settings in Device-Config and then Clears the the UID of the device
-  releaseDevice(device) {
+  releaseDevice(event, device) {
+    event.stopPropagation();
     // this.deviceService.deleteDocument('device-configs/' + device.id).then(() => {
-      this.deviceService.releaseDevice(device.id);
+    this.deviceService.releaseDevice(device.id);
     // });
   }
 
