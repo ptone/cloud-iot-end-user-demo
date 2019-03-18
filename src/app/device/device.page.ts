@@ -8,7 +8,6 @@ import { ModalController } from '@ionic/angular';
 import { DeviceFormComponent } from './device-form/device-form.component';
 import { Observable } from 'rx';
 import { DeviceService } from '../services/device.service';
-import { deferEvent } from '@ionic/core';
 
 @Component({
   selector: 'app-device',
@@ -60,7 +59,6 @@ export class DevicePage implements OnInit {
 
   // Deletes any settings in Device-Config and then Clears the the UID of the device
   releaseDevice(event, device) {
-    event.preventDefault();
     event.stopPropagation();
     // this.deviceService.deleteDocument('device-configs/' + device.id).then(() => {
     this.deviceService.releaseDevice(device.id);
