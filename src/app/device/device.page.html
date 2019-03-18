@@ -29,14 +29,16 @@
                 </ion-segment>
 
                 <ion-list>
-                    <ion-item [href]="'device/' + device.id" *ngFor="let device of filtered | async; trackBy: trackById">
+                    <ion-item  *ngFor="let device of filtered | async; trackBy: trackById">
                         <ion-label>
                             <!-- <span ><a [href]="'device/' + device.id">{{ device.content }}</a></span> -->
                             <span>{{ device.deviceNickname }}</span>
                         </ion-label>
 
 
-
+                    <ion-button [href]="'device/' + device.id" color="white">
+                            <ion-icon name="Expand"></ion-icon> &nbsp; Details
+                        </ion-button>
                         <ion-button (click)="releaseDevice($event, device)" color="white">
                             <ion-icon name="remove-circle" color="danger"></ion-icon> &nbsp; Release
                         </ion-button>
