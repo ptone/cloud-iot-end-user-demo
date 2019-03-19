@@ -121,8 +121,8 @@ export class DeviceChartComponent implements OnInit {
           }],
           yAxes: [{
             ticks: {
-              min: 0,
-              max: 60,
+              suggestedMin: 0,
+              suggestedMax: 60,
             }
           }]
         },
@@ -163,8 +163,8 @@ export class DeviceChartComponent implements OnInit {
           }],
           yAxes: [{
             ticks: {
-              min: 0,
-              max: 500,
+              suggestedMin: 0,
+              suggestedMax: 500,
             }
           }]
         },
