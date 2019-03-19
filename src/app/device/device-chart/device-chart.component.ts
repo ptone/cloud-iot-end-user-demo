@@ -102,7 +102,7 @@ export class DeviceChartComponent implements OnInit {
           datasets: [{
               pointRadius: 0,
               label: 'Temperature Data',
-              borderColor: 'rgb(255, 99, 132)',
+              borderColor: '#4285F4',
               data: [],
           }]
       },
@@ -144,7 +144,7 @@ export class DeviceChartComponent implements OnInit {
           datasets: [{
               pointRadius: 0,
               label: 'Light Data',
-              borderColor: 'rgb(255, 99, 132)',
+              borderColor: '#4285F4',
               data: [],
           }]
       },
