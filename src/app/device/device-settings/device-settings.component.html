@@ -7,18 +7,18 @@
     <ion-card-content>
         <ion-list inset=true>
             <ion-item>
-                <ion-label position="floating">Temperature Threshold</ion-label>
-                <ion-range dualKnobs="true" [(ngModel)]="tempSetting" pin="true" min="20" max="45" color="primary">
-                    <ion-icon color="primary" size="small" slot="start" name="thermometer"></ion-icon>
-                    <ion-icon color="primary" size="medium" slot="end" name="thermometer"></ion-icon>
+                <ion-label position="floating">Tilt Threshold</ion-label>
+                <ion-range dualKnobs="true" [(ngModel)]="tempSetting" pin="true" min="-100" max="100" color="primary">
+                    <ion-icon color="primary" size="small" slot="start" name="arrow-dropdown"></ion-icon>
+                    <ion-icon color="primary" size="medium" slot="end" name="arrow-dropup"></ion-icon>
                 </ion-range>
             </ion-item>
             <ion-item>
                 <ion-label position="fixed">
-                    lower: {{tempSetting ? tempSetting.lower : 0}}
+                    lower: {{tempSetting ? tempSetting.lower : -20}}
                 </ion-label>
                 <ion-label position="fixed">
-                    upper: {{tempSetting ? tempSetting.upper : 70}}
+                    upper: {{tempSetting ? tempSetting.upper : 20}}
                 </ion-label>
             </ion-item>
             <ion-item class="error-text">
