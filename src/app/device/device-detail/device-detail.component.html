@@ -11,10 +11,6 @@
     <ion-row padding *ngIf="device$ | async as device; else loadingOrError">
         <ion-col size-lg="6" offset-lg="3">
         <h2>{{ device.deviceNickname }}</h2>
-            <!-- Update Device Settings Card -->
-            <app-settings></app-settings>
-            <!-- Device Metric Charts Card -->
-            <app-device-chart [deviceId]="device.id"></app-device-chart>
             <!-- Device Details Card -->
             <ion-card>
                 <ion-card-header>
@@ -28,6 +24,10 @@
                     </ion-list>
                 </ion-card-content>
             </ion-card>
+            <!-- Update Device Settings Card -->
+            <app-settings></app-settings>
+            <!-- Device Metric Charts Card -->
+            <app-device-chart [deviceId]="device.id"></app-device-chart>
 
         </ion-col>
 
