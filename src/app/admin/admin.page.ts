@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
-import { ModalController } from '@ionic/angular';
-import { DeviceService } from '../services/device.service';
+import { AdminService } from '../services/admin.service';
 
 @Component({
     selector: 'app-admin',
@@ -12,18 +10,14 @@ import { DeviceService } from '../services/device.service';
 })
 export class AdminPage implements OnInit {
     devices;
-    filtered;
-
-    filter = new BehaviorSubject(null);
 
     constructor(
-        public deviceService: DeviceService,
-        public modal: ModalController,
+        public adminService: AdminService,
         public auth: AuthService
     ) { }
 
     ngOnInit() {
         console.log('admin page');
-
+        this.devices = this.adminService.allDevices$();
     }
 }

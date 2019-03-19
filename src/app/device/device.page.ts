@@ -28,7 +28,6 @@ export class DevicePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('uid');
     this.devices = this.auth.user$.pipe(
       switchMap(user =>
         this.deviceService.getDevicesByUid(user.uid)
@@ -60,7 +59,7 @@ export class DevicePage implements OnInit {
   // Deletes any settings in Device-Config and then Clears the the UID of the device
   releaseDevice(device) {
     // this.deviceService.deleteDocument('device-configs/' + device.id).then(() => {
-      this.deviceService.releaseDevice(device.id);
+    this.deviceService.releaseDevice(device.id);
     // });
   }
 

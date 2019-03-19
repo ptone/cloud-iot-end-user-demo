@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TutorialGuard } from './guards/tutorial.guard';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -11,14 +10,12 @@ const routes: Routes = [
   },
   {
     path: 'device',
-    loadChildren: './device/device.module#DevicePageModule'
-    ,
+    loadChildren: './device/device.module#DevicePageModule',
     canActivate: [AuthGuard]
   },
   {
     path: 'admin',
-    loadChildren: './admin/admin.module#AdminPageModule'
-    ,
+    loadChildren: './admin/admin.module#AdminPageModule',
     canActivate: [AuthGuard]
   },
   {
