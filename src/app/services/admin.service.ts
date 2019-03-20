@@ -14,6 +14,10 @@ export class AdminService {
 
 
     allDevices$() {
-        return this.dbService.collection$('devices')
+        return this.dbService.collection$('devices');
+    }
+
+    allUsers$() {
+        return this.dbService.collection$('users');
     }
 }
