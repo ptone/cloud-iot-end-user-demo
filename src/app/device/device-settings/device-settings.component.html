@@ -1,7 +1,8 @@
 <!-- Card For Sending Config Updates to Device -->
 <ion-card>
     <ion-card-header>
-        <ion-card-title>Device Settings</ion-card-title>
+        <ion-card-subtitle *ngIf="deviceId" >{{deviceId}}</ion-card-subtitle>
+        <ion-card-title>Settings</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>

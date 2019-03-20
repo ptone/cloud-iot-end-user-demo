@@ -4,35 +4,17 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref=''></ion-back-button>
         </ion-buttons>
+        <ion-title *ngIf="device$ | async as device">Device: {{device.id}}</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <ion-row *ngIf="device$ | async as device; else loadingOrError">
         <ion-col size-lg="6" offset-lg="3">
-        <h2>{{ device.deviceNickname }}</h2>
-            <!-- Device Details Card -->
-            <ion-card>
-                <ion-card-header>
-                    <ion-card-title>Device Details</ion-card-title>
-                </ion-card-header>
-                <ion-card-content>
-                    <ion-list inset=true>
-                        <ion-item *ngFor="let prop of device | keyvalue">
-                            <strong>{{ prop.key }}</strong>: {{ prop.value }}
-                        </ion-item>
-                    </ion-list>
-                </ion-card-content>
-            </ion-card>
-            <!-- Update Device Settings Card -->
             <app-settings></app-settings>
-            <!-- Device Metric Charts Card -->
-
         </ion-col>
-
     </ion-row>
-    <app-device-chart *ngIf="device$ | async as device"[deviceId]="device.id"></app-device-chart>
-    
+    <app-device-chart *ngIf="device$ | async as device" [deviceId]="device.id"></app-device-chart>
     <ng-template #loadingOrError>
         <ng-container *ngIf="errorObject; else loading">
             <ion-row>
