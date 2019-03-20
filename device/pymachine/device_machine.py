@@ -9,7 +9,7 @@ from aiy.cloudiot import CloudIot
 from luma.core.render import canvas
 from PIL import ImageDraw, ImageFont
 from time import sleep
-
+import threading
 from . import tilter
 
 
@@ -53,6 +53,9 @@ class Device(object):
         self.enviro = EnviroKit()
         self.claimed = False
         self.tilter = tilter.Tilter()
+        self.tilter.upper = 40
+        self.tilter.lower = -40
+        threading.Thread(target=self.tilter.loop).start()
 
     def get_client(self):
         self.client = mqtt.Client(client_id=self.client_id, userdata=self)
@@ -138,10 +141,7 @@ class Device(object):
             #  current_button_state = GPIO.input(self.button_pin)
             current_button_state = 0
             now = datetime.datetime.now()
-            self.tilter.update()
             if self.last_publish < (now - datetime.timedelta(seconds=3)):
-                # make sure buzzer isn't latched on during publish, as we are single threaded
-                self.tilter.bz.off()
                 data = {"temp": self.enviro.temperature, "light": self.enviro.ambient_light}
                 print(data)
                 if self.claimed:

@@ -50,6 +50,7 @@ class Tilter:
     def loop(self):
         while True:
             try:
+                self.update()
                 time.sleep(0.01)
             except KeyboardInterrupt:
         #        grovepi.digitalWrite(buzzer,0)
