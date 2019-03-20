@@ -9,6 +9,8 @@ from aiy.cloudiot import CloudIot
 from luma.core.render import canvas
 from PIL import ImageDraw, ImageFont
 from time import sleep
+import threading
+from . import tilter
 
 
 # import mqtt_util
@@ -50,6 +52,10 @@ class Device(object):
         self.state_topic = '/devices/{}/events/settings'.format(self.device_id) 
         self.enviro = EnviroKit()
         self.claimed = False
+        self.tilter = tilter.Tilter()
+        self.tilter.upper = 40
+        self.tilter.lower = -40
+        threading.Thread(target=self.tilter.loop).start()
 
     def get_client(self):
         self.client = mqtt.Client(client_id=self.client_id, userdata=self)
@@ -137,6 +143,7 @@ class Device(object):
             now = datetime.datetime.now()
             if self.last_publish < (now - datetime.timedelta(seconds=3)):
                 data = {"temp": self.enviro.temperature, "light": self.enviro.ambient_light}
+                print(data)
                 if self.claimed:
                     print("publishing")
                     self.client.publish(self.telemetry_topic, json.dumps(data))
@@ -161,6 +168,8 @@ class Device(object):
                 draw.text((1, -5), "bye", fill="white", font=font)
 
         print(self.settings)
+        self.tilter.upper  = self.settings['upper']
+        self.tilter.lower = self.settings['lower']
         self.client.publish(self.state_topic, msg.payload)
         print("ok")
         return
@@ -176,5 +185,5 @@ class Device(object):
         #  run the device loop
         while True:
             self.run_step()
-            time.sleep(.3)
+            time.sleep(.01)
             #  print "running", self._light, self.state_version
