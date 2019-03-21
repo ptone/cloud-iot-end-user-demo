@@ -1,6 +1,9 @@
 <!-- Card For Sending Config Updates to Device -->
 <ion-card>
     <ion-card-header>
+        <ion-item float-right *ngIf=updateDisabled>
+            <ion-spinner color="primary" name="crescent"></ion-spinner>
+        </ion-item>
         <ion-card-subtitle *ngIf="deviceId" >{{deviceId}}</ion-card-subtitle>
         <ion-card-title>Settings</ion-card-title>
     </ion-card-header>
@@ -9,7 +12,7 @@
         <ion-row>
             <ion-col>
                 <ion-label position="floating">Tilt Threshold</ion-label>
-                <ion-range dualKnobs="true" [(ngModel)]="tempSetting" pin="true" min="20" max="45" color="primary">
+                <ion-range [disabled]=updateDisabled dualKnobs="true" [(ngModel)]="tempSetting" pin="true" min="20" max="45" color="primary">
                     <ion-icon color="primary" size="small" slot="start" name="thermometer"></ion-icon>
                     <ion-icon color="primary" size="medium" slot="end" name="thermometer"></ion-icon>
                 </ion-range>
@@ -21,21 +24,17 @@
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col>
+            <ion-col size="6">
                 <ion-button color="primary" size="default" [disabled]=updateDisabled (click)="updateConfig()">
                     <ion-text>Update</ion-text>
-
                 </ion-button>
-                <ion-item *ngIf=updateDisabled>
-                    <ion-spinner color="primary" name="crescent"></ion-spinner>
-                </ion-item>
             </ion-col>
-            <ion-col>
+            <ion-col size="3">
                 <ion-item>
                     Lower:&nbsp;<ion-text color="primary">{{tempSetting ? tempSetting.lower : 0}}</ion-text>
                 </ion-item>
             </ion-col>
-            <ion-col>
+            <ion-col size="3">
                 <ion-item>
                     Upper:&nbsp;<ion-text color="primary">{{tempSetting ? tempSetting.upper : 70}}</ion-text>
                 </ion-item>
