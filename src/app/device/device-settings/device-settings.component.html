@@ -12,9 +12,9 @@
         <ion-row>
             <ion-col>
                 <ion-label position="floating">Tilt Threshold</ion-label>
-                <ion-range [disabled]=updateDisabled dualKnobs="true" [(ngModel)]="tempSetting" pin="true" min="20" max="45" color="primary">
-                    <ion-icon color="primary" size="small" slot="start" name="thermometer"></ion-icon>
-                    <ion-icon color="primary" size="medium" slot="end" name="thermometer"></ion-icon>
+                <ion-range [disabled]=updateDisabled dualKnobs="true" [(ngModel)]="tempSetting" pin="true" min="-100" max="100" color="primary">
+                    <ion-icon color="primary" size="small" slot="start" name="arrow-dropdown"></ion-icon>
+                    <ion-icon color="primary" size="medium" slot="end" name="arrow-dropup"></ion-icon>
                 </ion-range>
             </ion-col>
         </ion-row>
