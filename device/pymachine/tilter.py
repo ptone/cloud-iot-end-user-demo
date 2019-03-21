@@ -28,9 +28,6 @@ class Tilter:
         if (now - self.last_sample) > datetime.timedelta(0, self.sample_period, 0):
             axes = self.accel.getAxes(True)
             self.last_sample = now
-            print(axes)
-            print(self.upper)
-            print(axes['x'] > self.upper / 100)
             if (axes['x'] > self.upper / 100) or (axes['x'] < self.lower / 100):
                 self.alarm = True
             else:

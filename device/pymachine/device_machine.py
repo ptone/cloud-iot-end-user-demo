@@ -143,9 +143,7 @@ class Device(object):
             now = datetime.datetime.now()
             if self.last_publish < (now - datetime.timedelta(seconds=3)):
                 data = {"temp": self.enviro.temperature, "light": self.enviro.ambient_light}
-                print(data)
                 if self.claimed:
-                    print("publishing")
                     self.client.publish(self.telemetry_topic, json.dumps(data))
                     self.last_publish = now
         #  only reports if state dirty flag set
@@ -167,11 +165,9 @@ class Device(object):
             with canvas(self.enviro.display) as draw:
                 draw.text((1, -5), "bye", fill="white", font=font)
 
-        print(self.settings)
         self.tilter.upper  = self.settings['upper']
         self.tilter.lower = self.settings['lower']
         self.client.publish(self.state_topic, msg.payload)
-        print("ok")
         return
         
     def run_step(self):
