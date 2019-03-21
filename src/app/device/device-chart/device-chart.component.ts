@@ -114,7 +114,7 @@ export class DeviceChartComponent implements OnInit {
             type: 'realtime',   // x axis will auto-scroll from right to left
             realtime: {         // per-axis options
                 duration: 20000,    // data in the past 20000 ms will be displayed
-                delay: 4000,        // delay of 1000 ms, so upcoming values are known before plotting a line
+                delay: 3000,        // delay of 1000 ms, so upcoming values are known before plotting a line
                 pause: false,       // chart is not paused
                 ttl: undefined      // data will be automatically deleted as it disappears off the chart
             }
@@ -156,7 +156,7 @@ export class DeviceChartComponent implements OnInit {
             type: 'realtime',   // x axis will auto-scroll from right to left
             realtime: {         // per-axis options
                 duration: 20000,    // data in the past 20000 ms will be displayed
-                delay: 4000,        // delay of 1000 ms, so upcoming values are known before plotting a line
+                delay: 3000,        // delay of 1000 ms, so upcoming values are known before plotting a line
                 pause: false,       // chart is not paused
                 ttl: undefined      // data will be automatically deleted as it disappears off the chart
             }
