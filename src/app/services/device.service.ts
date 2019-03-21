@@ -120,6 +120,7 @@ export class DeviceService {
         } else if (data['uid'] == doc.data()['uid']) {
           reject('Error: Device already attached to this account');
         }
+        resolve();
       }, err => {
 
         // Expected error on read even if the Device exists but the UID is empty
