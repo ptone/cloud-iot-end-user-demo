@@ -58,8 +58,8 @@ export class DeviceChartComponent implements OnInit {
 
     // Get current values
     if (data.length) {
-      this.currentLight = data[0].light;
-      this.currentTemp = data[0].temp;
+      this.currentLight = data[0].light ? data[0].light.toFixed(2) : null;
+      this.currentTemp = data[0].temp ? data[0].temp.toFixed(2) : null;
       this.lastUpdated = new Date();
     }
 
@@ -102,7 +102,7 @@ export class DeviceChartComponent implements OnInit {
           datasets: [{
               pointRadius: 0,
               label: 'Temperature Data',
-              borderColor: 'rgb(255, 99, 132)',
+              borderColor: '#4285F4',
               data: [],
           }]
       },
@@ -144,7 +144,7 @@ export class DeviceChartComponent implements OnInit {
           datasets: [{
               pointRadius: 0,
               label: 'Light Data',
-              borderColor: 'rgb(255, 99, 132)',
+              borderColor: '#4285F4',
               data: [],
           }]
       },
@@ -163,8 +163,8 @@ export class DeviceChartComponent implements OnInit {
           }],
           yAxes: [{
             ticks: {
-              min: 0,
-              max: 500,
+              suggestedMin: 0,
+              suggestedMax: 500,
             }
           }]
         },

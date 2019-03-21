@@ -5,14 +5,14 @@
 
 :root {
     /** primary **/
-    --ion-color-primary: #488aff;
+    --ion-color-primary: #4285F4;
     --ion-color-primary-rgb: 72, 138, 255;
     --ion-color-primary-contrast: #fff;
     --ion-color-primary-contrast-rgb: 255, 255, 255;
     --ion-color-primary-shade: #3f79e0;
     --ion-color-primary-tint: #5a96ff;
     /** secondary **/
-    --ion-color-secondary: #32db64;
+    --ion-color-secondary: #0cd1e8;
     --ion-color-secondary-rgb: 50, 219, 100;
     --ion-color-secondary-contrast: #fff;
     --ion-color-secondary-contrast-rgb: 255, 255, 255;
@@ -40,7 +40,7 @@
     --ion-color-warning-shade: #e0b500;
     --ion-color-warning-tint: #ffd31a;
     /** danger **/
-    --ion-color-danger: #f53d3d;
+    --ion-color-danger: #E67C73;
     --ion-color-danger-rgb: 245, 61, 61;
     --ion-color-danger-contrast: #fff;
     --ion-color-danger-contrast-rgb: 255, 255, 255;
@@ -67,8 +67,8 @@
     --ion-color-dark-contrast-rgb: 255, 255, 255;
     --ion-color-dark-shade: #1e1e1e;
     --ion-color-dark-tint: #383838;
-    --body-font: 'Cairo';
-    --heading-font: 'Rokkitt';
+    --body-font: 'Roboto';
+    --heading-font: 'Roboto';
     --ion-font-family: var(--body-font);
 }
 
@@ -80,13 +80,4 @@
     --ion-font-family: var( --body-font) !important;
 }
 
-@font-face {
-    font-family: 'Cairo';
-    src: url('/assets/fonts/Cairo/Cairo-Regular.ttf');
-}
-
-@font-face {
-    font-family: 'Rokkitt';
-    src: url('/assets/fonts/Rokkitt/Rokkitt-Bold.ttf');
-    font-weight: bold;
-}
+$toolbar-background: blue;
