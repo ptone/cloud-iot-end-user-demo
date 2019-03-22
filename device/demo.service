@@ -1,5 +1,8 @@
 [Unit]
 Description=demo-device
+Wants=network-online.target
+After=network.target network-online.target
+
 [Service]
 User=root
 Group=root
