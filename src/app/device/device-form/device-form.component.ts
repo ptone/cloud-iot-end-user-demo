@@ -46,6 +46,10 @@ export class DeviceFormComponent implements OnInit {
     });
   }
 
+  async dismissModal() {
+    this.modal.dismiss();
+  }
+
   async createDevice() {
     console.log('attempting to create device');
     const uid = await this.auth.uid();

@@ -20,35 +20,10 @@
             <ion-input formControlName="deviceNickname" type="text" placeholder="device"></ion-input>
         </ion-item>
 
-        <!--
-
-        <ion-label>tags</ion-label>
-        <ion-textarea formControlName="tag" type="tag" placeholder="other" rows="1"></ion-textarea>
-
-        
-
-        <ion-label>Status</ion-label>
-        <ion-list>
-            <ion-radio-group formControlName="status">
-
-                <ion-item>
-                    <ion-label>Pending</ion-label>
-                    <ion-radio slot="start" value="pending" checked></ion-radio>
-                </ion-item>
-
-                <ion-item>
-                    <ion-label>Complete</ion-label>
-                    <ion-radio slot="start" value="complete"></ion-radio>
-                </ion-item>
-
-            </ion-radio-group>
-        </ion-list>
-
-    -->
-
         <div class="error-text">{{errorDisplay}}</div>
 
         <ion-button [disabled]="deviceForm.invalid" type="submit">{{ device ? 'Claim' : 'Claim' }}</ion-button>
+        <ion-button (click)="dismissModal()">Cancel</ion-button>
     </form>
 
 
