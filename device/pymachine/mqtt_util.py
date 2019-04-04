@@ -9,13 +9,18 @@ def error_str(rc):
 
 
 
-def on_connect(unused_client, unused_userdata, unused_flags, rc):
+def on_connect(unused_client, obj, unused_flags, rc):
     """Callback for when a device connects."""
+    obj.connected = True
+    obj.led.on()
+    print(obj.project_id)
     print('on_connect', error_str(rc))
 
 
-def on_disconnect(unused_client, unused_userdata, rc):
+def on_disconnect(unused_client, obj, rc):
     """Paho callback for when a device disconnects."""
+    obj.connected = False
+    obj.led.off()
     print('on_disconnect', error_str(rc))
 
 

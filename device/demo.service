@@ -1,0 +1,14 @@
+[Unit]
+Description=demo-device
+Wants=network-online.target
+After=network.target network-online.target
+
+[Service]
+User=root
+Group=root
+# WorkingDirectory=/opt/bootcamp
+ExecStart=/home/pi/device/demo/start.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

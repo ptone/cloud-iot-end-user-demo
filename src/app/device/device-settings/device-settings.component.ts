@@ -13,18 +13,19 @@ export class DeviceSettingsComponent implements OnInit {
   tempSetting;
   errorDisplay: string;
   device;
+  deviceId;
 
   constructor(private route: ActivatedRoute, private deviceService: DeviceService) { }
 
   ngOnInit() {
-    const deviceId = this.route.snapshot.paramMap.get('id');
-    this.deviceService.getDocument('devices/' + deviceId).then(doc => {
+    this.deviceId = this.route.snapshot.paramMap.get('id');
+    this.deviceService.getDocument('devices/' + this.deviceId).then(doc => {
       this.device = doc.data();
       this.tempSetting = doc.data()['setting'] ? doc.data()['setting'] : { lower: 0, upper: 70 };
     });
 
     // Determine whether or not update button should be greyed out
-    this.deviceService.deviceCanBeUpdated$(deviceId).subscribe(val => {
+    this.deviceService.deviceCanBeUpdated$(this.deviceId).subscribe(val => {
       this.updateDisabled = !val;
     });
   }

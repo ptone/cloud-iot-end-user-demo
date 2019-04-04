@@ -11,7 +11,7 @@ from PIL import ImageDraw, ImageFont
 from time import sleep
 import threading
 from . import tilter
-
+from gpiozero import LED
 
 # import mqtt_util
 
@@ -53,9 +53,31 @@ class Device(object):
         self.enviro = EnviroKit()
         self.claimed = False
         self.tilter = tilter.Tilter()
+        self.tiltingT = None
         self.tilter.upper = 40
         self.tilter.lower = -40
-        threading.Thread(target=self.tilter.loop).start()
+        self.connected = False
+        self.led = LED(21)
+    
+    def start_tilt(self):
+        if not self.tilter.run:
+            self.tilter.run = True
+            self.tiltingT = threading.Thread(target=self.tilter.loop)
+            self.tiltingT.do_run = True
+            self.tiltingT.start()
+
+    def stop_tilt(self):
+        print("stopping tilt enter")
+        if self.tilter.run:
+            print("stopping tilt tilter.run true")
+            if self.tiltingT != None:
+                print("stopping tilt thread")
+                self.tiltingT.do_run = False
+                self.tiltingT.join()
+                print("stopped")
+            self.tiltingT = None
+            self.tilter.run = False
+        print("stopping tilt end")
 
     def get_client(self):
         self.client = mqtt.Client(client_id=self.client_id, userdata=self)
@@ -143,11 +165,10 @@ class Device(object):
             now = datetime.datetime.now()
             if self.last_publish < (now - datetime.timedelta(seconds=3)):
                 data = {"temp": self.enviro.temperature, "light": self.enviro.ambient_light}
-                print(data)
                 if self.claimed:
-                    print("publishing")
                     self.client.publish(self.telemetry_topic, json.dumps(data))
                     self.last_publish = now
+            # self.led = self.connected
         #  only reports if state dirty flag set
         # self.report_state()
 
@@ -161,17 +182,17 @@ class Device(object):
         if payload_data["claimed"]:
             self.claimed = True
             with canvas(self.enviro.display) as draw:
-                draw.text((1, -5), "hello", fill="white", font=font)
+                draw.text((1, -5), "claimed", fill="white", font=font)
+            self.start_tilt()
         else:
             self.claimed = False
+            self.stop_tilt()
             with canvas(self.enviro.display) as draw:
-                draw.text((1, -5), "bye", fill="white", font=font)
+                draw.text((1, -5), self.device_id, fill="white", font=font)
 
-        print(self.settings)
         self.tilter.upper  = self.settings['upper']
         self.tilter.lower = self.settings['lower']
         self.client.publish(self.state_topic, msg.payload)
-        print("ok")
         return
         
     def run_step(self):

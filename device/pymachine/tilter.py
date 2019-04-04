@@ -1,6 +1,8 @@
 import time
 import datetime
 import gpiozero
+import sys
+import threading
 
 from gpiozero import Buzzer
 
@@ -23,14 +25,12 @@ class Tilter:
         self.alarm = False
         self.beep_change = datetime.datetime.now()
         self.last_sample = datetime.datetime.now()
+        self.run = False
     def update(self):
         now = datetime.datetime.now()
         if (now - self.last_sample) > datetime.timedelta(0, self.sample_period, 0):
             axes = self.accel.getAxes(True)
             self.last_sample = now
-            print(axes)
-            print(self.upper)
-            print(axes['x'] > self.upper / 100)
             if (axes['x'] > self.upper / 100) or (axes['x'] < self.lower / 100):
                 self.alarm = True
             else:
@@ -48,16 +48,16 @@ class Tilter:
             self.bz.off()
 
     def loop(self):
-        while True:
+        t = threading.currentThread()
+        while getattr(t, "do_run", True):
             try:
                 self.update()
                 time.sleep(0.01)
-            except KeyboardInterrupt:
+            except Exception:
         #        grovepi.digitalWrite(buzzer,0)
                 self.bz.off()
-                break
-            except IOError:
-                print ("Error")
+                raise
+        return
 
 def main():
     t = Tilter()
