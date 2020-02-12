@@ -1,0 +1,41 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+  function isSignedIn() {
+  return request.auth != null;
+  }
+  
+    
+    function isOwner() {
+    	return get(/databases/$(database)/documents/devices/$(resource.data.deviceId)) == request.auth.uid
+    }
+    
+    match /users/{uid} {
+     allow read, write: if get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true;
+     allow read, write: if request.auth.uid == uid;
+    }
+    
+    match /devices/{deviceId} {
+    // Rule for admin getAll
+    allow read, write: if get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true;
+    allow read: if request.auth.uid == resource.data.uid;
+    allow create: if request.auth.uid == request.resource.data.uid;
+    allow write: if request.auth.uid == resource.data.uid;
+    //allow write: if !resource.data.keys().hasAll(['uid']);
+    allow write: if resource.data.uid == "" || resource.data.uid == null;
+    }
+    
+    match /telemetry/{id} {
+    	allow write: if false
+      allow read: if request.auth.uid == get(/databases/$(database)/documents/devices/$(resource.data.deviceId)).data.uid
+    }
+    
+    match /device-configs/{id} {
+      allow read, write: if get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true;
+    	allow write: if request.auth.uid == get(/databases/$(database)/documents/devices/$(resource.data.deviceId)).data.uid
+      // Todo: Rules for delete and create
+      allow delete: if true
+      allow create: if true
+      allow read: if true
+    }
+  }
+}

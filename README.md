@@ -1,19 +1,43 @@
-# Next Demo 19
+# Code for Next Demo 19
+
+This code was used in this presentation: https://www.youtube.com/watch?v=10Nelw2nL-Q
+
+The sample code is provided as was used in the demo, and will not be updated or supported.
+
+## There are Several folders/components
+
+1. `device` - has the python code that ran on the demo device, HW was based on [this board](https://coral.ai/products/environmental)
+1. `functions` contains code that glue Firestore and Devices - written in typescript, runs as Firebase functions
+1. `src` contains the [Ionic](https://ionicframework.com/getting-started) web front end
 
 ## setup
+
+### serve locally:
+
 1. npm i
 2. ionic serve
 
-## Devops
-1. [GCP Project](https://pantheon.corp.google.com/home/dashboard?project=iot-end-user-demo)
 
-## Docs
-1. [End User Auth](https://docs.google.com/document/d/1pbhqN_av0KfvkGGCbPAfM966PyYqN42KtrtbycN62Lk/edit#heading=h.lchkgwit4g6l)
-2. [Firebase IOT Session](https://docs.google.com/document/d/1vEIT3iysDHtYqkcL1QU4XjxrMzHV76Zd7ewSjin2SJg/edit?ts=5c61a393#)
-3. [Mocks](https://gallery.googleplex.com/projects/MCHbtQVoQ2HCZbI8YFle66Xb/files/MCFVMdU9GrDApyF-p-aXaOEW)
+### other notes
 
-## Ionic4 + Firebase Master Course info
+ - The site can be deployed to Firebase hosting
+ - Firestore rules and Firestore auth were used.
+ - the device private key included in the repo is for illustration/placeholder, it is no longer valid
+ - This readme does not represent a complete tutorial or a set of steps that can be re-used to replicate the environment, but the code should be complete.
+ 
 
-- [Enroll in the Course](https://projects.angularfirebase.com/p/ionic-4-firebase-master-course/)
-- [Try the Beta Android App](https://play.google.com/apps/testing/com.angularfirebase.ionfire)
+Not a Google Product
 
+Copyright 2019 Google Inc
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
