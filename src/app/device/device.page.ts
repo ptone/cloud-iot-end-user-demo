@@ -28,7 +28,6 @@ export class DevicePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('uid');
     this.devices = this.auth.user$.pipe(
       switchMap(user =>
         this.deviceService.getDevicesByUid(user.uid)
